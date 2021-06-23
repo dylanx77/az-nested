@@ -72,7 +72,7 @@
   "outputs": {
     "vnetResourceId": {
       "type": "string",
-      "value": "[reference(parameters('vnetName')).id]"
+      "value": "[reference(parameters('vnetName')).resourceGuid]"
     }
   }
 }
