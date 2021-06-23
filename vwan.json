@@ -1,0 +1,130 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus",
+      "metadata":{
+        "description": "Specify the location for the resources."
+      }
+    },
+    "vwanName": {
+      "type": "string",
+      "defaultValue": "SampleVirtualWan",
+      "metadata": {
+          "description": "Name of the Virtual Wan."
+      }
+    },
+    "vwanSku": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+          "description": "Sku of the Virtual Wan."
+      },
+      "allowedValues": [
+          "Standard",
+          "Basic"
+      ]
+    },
+    "hubName": {
+      "type": "string",
+      "defaultValue": "SampleVirtualHub",
+      "metadata": {
+          "description": "Name of the Virtual Hub. A virtual hub is created inside a virtual wan."
+      }
+    },
+    "addressPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.0.0/24",
+      "metadata": {
+          "description": "The hub address prefix. This address prefix will be used as the address prefix for the hub vnet"
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "linkedTempVnet01",
+      "metadata": {
+        "description": "VNet name"
+      }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.5.0.0/16",
+      "metadata": {
+        "description": "Address prefix"
+      }
+    },
+    "subnet1Prefix": {
+      "type": "string",
+      "defaultValue": "10.5.0.0/16",
+      "metadata": {
+        "description": "Subnet 1 Prefix"
+      }
+    },
+    "subnet1Name": {
+      "type": "string",
+      "defaultValue": "linkedTempVnet01-sn01",
+      "metadata": {
+        "description": "Subnet 1 Name"
+      }
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualWans",
+      "name": "[parameters('wanname')]",
+      "apiVersion": "2020-05-01",
+      "location": "[parameters('location')]",
+      "properties": {
+          "type": "[parameters('vwanSku')]"
+      }
+  },
+    {
+        "type": "Microsoft.Network/virtualHubs",
+        "name": "[parameters('hubName')]",
+        "apiVersion": "2020-05-01",
+        "location": "[parameters('location')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Network/virtualWans/', parameters('vwanName'))]"
+        ],
+        "properties": {
+            "addressPrefix": "[parameters('addressPrefix')]",
+            "virtualWan": {
+                "id": "[resourceId('Microsoft.Network/virtualWans',parameters('vwanName'))]"
+            }
+        }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "vnetLinkedTemplate",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/vnetLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('vnetName')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('vnetAddressPrefix')]"
+          },
+          "subnet1Prefix": {
+            "value": "[parameters('subnet1Prefix')]"
+          },
+          "subnet1Name": {
+            "value": "[parameters('subnet1Name')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    }
+  ]
+}
