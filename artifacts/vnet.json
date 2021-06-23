@@ -72,7 +72,7 @@
   "outputs": {
     "vnetResourceId": {
       "type": "string",
-      "value": "[reference(parameters('vnetName')).resourceGuid]"
+      "value": "resourceId(parameters('vnetResourceGroup'), 'Microsoft.Network/virtualNetwork', parameters('vnetName'))"
     }
   }
 }
