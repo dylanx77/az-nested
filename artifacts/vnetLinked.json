@@ -65,7 +65,7 @@
   ],
   "outputs": {
     "vnetResourceId": {
-      "type": "object",
+      "type": "string",
       "value": "[resourceId('Microsoft.Network/virtualNetwork', parameters('vnetName'))]"
     }
   }
