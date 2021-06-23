@@ -74,7 +74,9 @@
       "defaultValue": "linkedTempVnet01-sn01",
       "metadata": {
         "description": "Subnet 1 Name"
-      }
+      },
+    "vnetId": { 
+      "defaultValue": "[reference('vnetLinkedTemplate', '2020-06-01').outputs.vnetResourceId.value]"
     }
   },
   "variables": {
@@ -146,7 +148,7 @@
         ],
       "properties": {
           "remoteVirtualNetwork": {
-              "id": "[reference('vnetLinkedTemplate', '2020-06-01').outputs.vnetResourceId.value]"
+              "id": "[parameters('vnetId')]"
           },
           "allowHubToRemoteVnetTransit": true,
           "allowRemoteVnetToUseHubVnetGateways": true,
