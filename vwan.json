@@ -114,7 +114,7 @@
       ],
       "properties": {
           "remoteVirtualNetwork": {
-              "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+              "id": "[reference('vnetLinkedTemplate').outputs.vnetResourceId.value]"
           },
           "allowHubToRemoteVnetTransit": true,
           "allowRemoteVnetToUseHubVnetGateways": true,
