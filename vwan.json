@@ -98,6 +98,9 @@
           "vnetAddressPrefix": {
             "value": "[parameters('vnetAddressPrefix')]"
           },
+          "vnetResourceGroup": {
+            "value": "[parameters('vnetResourceGroup')]"
+          },
           "subnet1Prefix": {
             "value": "[parameters('subnet1Prefix')]"
           },
