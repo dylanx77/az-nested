@@ -146,7 +146,7 @@
         ],
       "properties": {
           "remoteVirtualNetwork": {
-              "id": "[reference('vnetLinkedTemplate').outputs.vnetResourceId.value]"
+              "id": "[reference('vnetLinkedTemplate', '2020-06-01').outputs.vnetResourceId.value]"
           },
           "allowHubToRemoteVnetTransit": true,
           "allowRemoteVnetToUseHubVnetGateways": true,
