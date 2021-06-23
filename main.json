@@ -4,7 +4,7 @@
   "parameters": {
     "location": {
       "type": "string",
-      "defaultValue": "westus2",
+      "defaultValue": "eastus",
       "metadata":{
         "description": "Specify the location for the resources."
       }
@@ -48,7 +48,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "relativePath": "ARM/nestedTest/artifacts/linkedTemplate.json"
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/linkedTemplate.json"
         },
         "parameters": {
           "storageAccountType": {
