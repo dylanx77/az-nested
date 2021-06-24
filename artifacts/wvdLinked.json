@@ -94,13 +94,7 @@
             "loadBalancerType": "[parameters('loadBalancerType')]",
             "validationEnvironment": "[parameters('validationEnvironment')]",
             "preferredAppGroupType": "[parameters('preferredAppGroupType')]",
-            "ring": null,
-            "registrationInfo": {
-                "expirationTime": "[parameters('tokenExpirationTime')]",
-                "token": null,
-                "registrationTokenOperation": "Update"
-            },
-            "vmTemplate": "[parameters('vmTemplate')]"
+            "ring": null
         },
         "hostpoolOptionalProps": {
         "customRdpProperty": "[parameters('customRdpProperty')]"
