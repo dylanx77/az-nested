@@ -39,12 +39,6 @@
                 "description": "Personal desktop assignment type"
             }
         },
-        "maxSessionLimit": {
-            "type": "string",
-            "metadata": {
-                "description": "Max number of sessions allowed"
-            }
-        },
         "loadBalancerType": {
             "type": "string",
             "metadata": {
@@ -52,7 +46,7 @@
             }
         },
         "validationEnvironment": {
-            "type": "string",
+            "type": "bool",
             "metadata": {
                 "description": "Validation environment"
             }
@@ -90,14 +84,14 @@
             "description": "[parameters('hostpoolDescription')]",
             "hostpoolType": "[parameters('hostpoolType')]",
             "personalDesktopAssignmentType": "[parameters('personalDesktopAssignmentType')]",
-            "maxSessionLimit": "[parameters('maxSessionLimit')]",
+            "maxSessionLimit": 99999,
             "loadBalancerType": "[parameters('loadBalancerType')]",
             "validationEnvironment": "[parameters('validationEnvironment')]",
             "preferredAppGroupType": "[parameters('preferredAppGroupType')]",
             "ring": null
         },
         "hostpoolOptionalProps": {
-        "customRdpProperty": "[parameters('customRdpProperty')]"
+            "customRdpProperty": "[parameters('customRdpProperty')]"
         }
     },
     "resources": [
