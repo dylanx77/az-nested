@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "kvRgName": {
+            "value": "kv-rg-01"
+        },
+        "keyVaultName": {
+            "value": "test-kv-016"
+        },
+        "vaultSku": {
+            "value": "Standard"
+        },
+        "objectId": {
+            "value": "c99772f8-320a-4087-8a38-09bbeae92b5a"
+        },
+        "keysPermissions": {
+            "value": [
+                "all"
+            ]
+        },
+        "secretsPermissions": {
+            "value": [
+                "all"
+            ]
+        },
+        "location": {
+            "value": "eastus"
+        }
+    }
+}

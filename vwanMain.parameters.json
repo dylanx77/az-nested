@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "vwanResourceGroup": {
+            "value": "vwan-rg01"
+        },
+        "vwanName": {
+            "value": "vwan-test01"
+        },
+        "vwanSku": {
+            "value": "Standard"
+        },
+        "hubName": {
+            "value": "vwan-test01-hub-01"
+        },
+        "hubAddressPrefix": {
+            "value": "10.12.0.0/24"
+        },
+        "commonVnetResourceGroup": {
+            "value": "common-vnet-rg01"
+        },
+        "commonVnetName": {
+            "value": "commonVnet01"
+        },
+        "commonVnetAddressPrefix": {
+            "value": "10.13.0.0/24"
+        },
+        "commonSubnet1Prefix": {
+            "value": "10.13.0.0/24"
+        },
+        "commonSubnet1Name": {
+            "value": "commonVnet01-sn01"
+        }
+    }
+}

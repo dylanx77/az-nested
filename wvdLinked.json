@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "hostPoolName": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool name"
+            }
+        },
+        "customRdpProperty": {
+            "type": "string",
+            "metadata": {
+                "description": "Hostpool rdp properties"
+            },
+            "defaultValue": ""
+        },
+        "hostPoolFriendlyName": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool friendly name"
+            }
+        },
+        "hostPoolDescription": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool description"
+            }
+        },
+        "hostPoolType": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool type"
+            }
+        },
+        "personalDesktopAssignmentType": {
+            "type": "string",
+            "metadata": {
+                "description": "Personal desktop assignment type"
+            }
+        },
+        "loadBalancerType": {
+            "type": "string",
+            "metadata": {
+                "description": "Load balancer type"
+            }
+        },
+        "validationEnvironment": {
+            "type": "bool",
+            "metadata": {
+                "description": "Validation environment"
+            }
+        },
+        "preferredAppGroupType": {
+            "type": "string",
+            "metadata": {
+                "description": "Preferred app group type"
+            }
+        },
+        "tokenExpirationTime": {
+            "type": "string",
+            "metadata": {
+                "description": "Token expiration time"
+            }
+        },
+        "vmTemplate": {
+            "type": "string",
+            "metadata": {
+                "description": "VM Template for host pool VMs"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {
+        "appGroupName": "[concat(parameters('hostpoolName'),'-DAG')]",
+        "apiVersion": "2019-12-10-preview",
+        "hostpoolRequiredProps": {
+            "friendlyName": "[parameters('hostpoolFriendlyName')]",
+            "description": "[parameters('hostpoolDescription')]",
+            "hostpoolType": "[parameters('hostpoolType')]",
+            "personalDesktopAssignmentType": "[parameters('personalDesktopAssignmentType')]",
+            "maxSessionLimit": 99999,
+            "loadBalancerType": "[parameters('loadBalancerType')]",
+            "validationEnvironment": "[parameters('validationEnvironment')]",
+            "preferredAppGroupType": "[parameters('preferredAppGroupType')]",
+            "ring": null
+        },
+        "hostpoolOptionalProps": {
+            "customRdpProperty": "[parameters('customRdpProperty')]"
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('hostpoolName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "type": "Microsoft.DesktopVirtualization/hostpools",
+            "location": "[parameters('location')]",
+            "properties": "[if(empty(parameters('customRdpProperty')), variables('hostpoolRequiredProps'), union(variables('hostpoolOptionalProps'), variables('hostpoolRequiredProps') ))]"
+        },
+        {
+            "name": "[variables('appGroupName')]",
+            "apiVersion": "2019-12-10-preview",
+            "type": "Microsoft.DesktopVirtualization/applicationgroups",
+            "location": "[parameters('location')]",
+            "properties": {
+                "hostpoolarmpath": "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostpoolName'))]",
+                "friendlyName": "Default Desktop",
+                "description": "Desktop Application Group created through the Hostpool Wizard",
+                "applicationGroupType": "Desktop"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostpoolName'))]"
+            ]
+        }
+    ],
+    "outputs": {
+    }
+  }

@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vwanName": {
+            "type": "string",
+            "metadata": {
+                "description": "VNet name"
+            }
+        },
+        "vwanSku": {
+            "type": "string",
+            "metadata": {
+                "description": "Address prefix"
+            }
+        },
+        "hubName": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet 1 Prefix"
+            }
+        },
+        "hubAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet 1 Name"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualWans",
+            "name": "[parameters('vwanName')]",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "type": "[parameters('vwanSku')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualHubs",
+            "name": "[parameters('hubName')]",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualWans/', parameters('vwanName'))]"
+            ],
+            "properties": {
+                "addressPrefix": "[parameters('hubAddressPrefix')]",
+                "virtualWan": {
+                    "id": "[resourceId('Microsoft.Network/virtualWans',parameters('vwanName'))]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+      "vnetResourceId": {
+        "type": "string",
+        "value": "resourceId('Microsoft.Network/virtualNetwork', parameters('vnetName'))"
+      }
+    }
+  }

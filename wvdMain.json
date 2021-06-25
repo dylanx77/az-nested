@@ -1,0 +1,163 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "wvdRgName": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource group that RSV exists in"
+            }
+        },
+        "hostPoolName": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool name"
+            }
+        },
+        "customRdpProperty": {
+            "type": "string",
+            "metadata": {
+                "description": "Hostpool rdp properties"
+            }
+        },
+        "hostPoolFriendlyName": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool friendly name"
+            }
+        },
+        "hostPoolDescription": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool description"
+            }
+        },
+        "hostPoolType": {
+            "type": "string",
+            "allowedValues": [
+                "Personal",
+                "Pooled"
+            ],
+            "metadata": {
+                "description": "Set this parameter to Personal if you would like to enable Persistent Desktop experience. Defaults to false."
+            }
+        },
+        "personalDesktopAssignmentType": {
+            "type": "string",
+            "allowedValues": [
+                "Automatic",
+                "Direct"
+            ],
+            "metadata": {
+                "description": "Set the type of assignment for a Personal hostpool type"
+            }
+        },
+        "loadBalancerType": {
+            "type": "string",
+            "allowedValues": [
+                "BreadthFirst",
+                "DepthFirst",
+                "Persistent"
+            ],
+            "metadata": {
+                "description": "Type of load balancer algorithm."
+            }
+        },
+        "validationEnvironment": {
+            "type": "bool",
+            "metadata": {
+                "description": "Whether to use validation enviroment."
+            }
+        },
+        "preferredAppGroupType": {
+            "type": "string",
+            "metadata": {
+                "description": "Preferred App Group type to display"
+            }
+        },
+        "tokenExpirationTime": {
+            "type": "string",
+            "metadata": {
+                "description": "Token expiration time"
+            }
+        },
+        "vmTemplate": {
+            "type": "string",
+            "metadata": {
+                "description": "VM Template for host pool VMs"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+       {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-05-01",
+            "location": "[parameters('location')]",
+            "name": "[parameters('wvdRgName')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "wvdLinkedTemplate",
+            "resourceGroup": "[parameters('wvdRgName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', parameters('wvdRgName'))]"
+            ],            
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/wvdLinked.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "hostPoolName": {
+                        "value": "[parameters('hostPoolName')]"
+                    },
+                    "customRdpProperty": {
+                        "value": "[parameters('customRdpProperty')]"
+                    },
+                    "hostPoolFriendlyName": {
+                        "value": "[parameters('hostPoolFriendlyName')]"
+                    },
+                    "hostPoolDescription": {
+                        "value": "[parameters('hostPoolDescription')]"
+                    },
+                    "hostPoolType": {
+                        "value": "[parameters('hostPoolType')]"
+                    },
+                    "personalDesktopAssignmentType": {
+                        "value": "[parameters('personalDesktopAssignmentType')]"
+                    },
+                    "loadBalancerType": {
+                        "value": "[parameters('loadBalancerType')]"
+                    },
+                    "validationEnvironment": {
+                        "value": "[parameters('validationEnvironment')]"
+                    },
+                    "preferredAppGroupType": {
+                        "value": "[parameters('preferredAppGroupType')]"
+                    },
+                    "tokenExpirationTime": {
+                        "value": "[parameters('tokenExpirationTime')]"
+                    },
+                    "vmTemplate": {
+                        "value": "[parameters('vmTemplate')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

@@ -1,0 +1,166 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata":{
+        "description": "Specify the location for the resources."
+      }
+    },
+    "vwanResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the VWAN resource group."
+      }
+    },
+    "vwanName": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Virtual Wan."
+      }
+    },
+    "vwanSku": {
+      "type": "string",
+      "metadata": {
+          "description": "Sku of the Virtual Wan."
+      },
+      "allowedValues": [
+          "Standard",
+          "Basic"
+      ]
+    },
+    "hubName": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Virtual Hub. A virtual hub is created inside a virtual wan."
+      }
+    },
+    "hubAddressPrefix": {
+      "type": "string",
+      "metadata": {
+          "description": "The hub address prefix. This address prefix will be used as the address prefix for the hub vnet"
+      }
+    },
+    "commonVnetResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Common vnet resource group."
+      }
+    },
+    "commonVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "VNet name"
+      }
+    },
+    "commonVnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Address prefix"
+      }
+    },
+    "commonSubnet1Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 1 Prefix"
+      }
+    },
+    "commonSubnet1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 1 Name"
+      }
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('vwanResourceGroup')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Note": "subscription level deployment"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('commonVnetResourceGroup')]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "Note": "subscription level deployment"
+      },
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "vwanDeployment",
+      "resourceGroup": "[parameters('vwanResourceGroup')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('vwanResourceGroup'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/vwanLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vwanName": {
+            "value": "[parameters('vwanName')]"
+          },
+          "vwanSku": {
+            "value": "[parameters('vwanSku')]"
+          },
+          "hubName": {
+            "value": "[parameters('hubName')]"
+          },
+          "hubAddressPrefix": {
+            "value": "[parameters('hubAddressPrefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "vnetCommonDeployment",
+      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('commonVnetResourceGroup'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/vnetSingleSubnet.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('commonVnetName')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('commonVnetAddressPrefix')]"
+          },
+          "subnet1Name": {
+            "value": "[parameters('commonSubnet1Name')]"
+          },
+          "subnet1Prefix": {
+            "value": "[parameters('commonSubnet1Prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    }
+  ]
+}
