@@ -6,19 +6,19 @@
             "value": "eastus"
         },
         "vwanResourceGroup": {
-            "value": "vwan-rg-01"
+            "value": "rg-network-dev-usgovva"
         },
         "vwanName": {
-            "value": "vwan-test-01"
+            "value": "vwan-dev-network-usgovva"
         },
         "vwanSku": {
             "value": "Standard"
         },
         "hubName": {
-            "value": "vwan-test-01-hub-01"
+            "value": "hub-dev-network-usgovva"
         },
         "hubAddressPrefix": {
-            "value": "10.12.0.0/24"
+            "value": "10.216.0.0/24"
         },
         "commonSubId": {
             "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
@@ -36,22 +36,28 @@
             "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
         },
         "commonVnetResourceGroup": {
-            "value": "common-vnet-rg-01"
+            "value": "rg-network-dev-common-usgovva"
         },
         "managementVnetResourceGroup": {
-            "value": "management-vnet-rg-01"
+            "value": "rg-network-dev-management-usgovva"
         },
         "securityVnetResourceGroup": {
-            "value": "security-vnet-rg-01"
+            "value": "rg-network-dev-security-usgovva"
         },
         "identityVnetResourceGroup": {
-            "value": "identity-vnet-rg-01"
+            "value": "rg-network-dev-identity-usgovva"
         },
         "devopsVnetResourceGroup": {
-            "value": "devops-vnet-rg-01"
+            "value": "rg-network-dev-devops-usgovva"
+        },
+        "dnsServers": {
+            "value": [
+                "10.216.2.36",
+                "10.216.2.37"
+            ]
         },
         "commonVnetName": {
-            "value": "common-vnet-01"
+            "value": "vnet-10.216.5.0_24-dev-common-usgovva"
         },
         "commonVnetAddressPrefix": {
             "value": "10.216.5.0/24"
@@ -69,40 +75,34 @@
             "value": "nsg-dev-common-usgovva"
         },
         "managementVnetName": {
-            "value": "managementVnet-01"
+            "value": "vnet-10.216.6.0_24-dev-management-usgovva"
         },
-        "managementVnetAddressPrefix": {
-            "value": "10.14.0.0/24"
+        "managementVnetCidr": {
+            "value": "10.216.6.0/24"
         },
-        "managementSubnet1Prefix": {
-            "value": "10.14.0.0/24"
+        "managementBastionSnCidr": {
+            "value": "10.216.6.0/27"
         },
-        "managementSubnet1Name": {
-            "value": "securityVnet-01-sn01"
+        "managementNsgName": {
+            "value": "nsg-dev-management-usgovva"
         },
         "securityVnetName": {
-            "value": "securityVnet-01"
+            "value": "vnet-10.216.3.0_24-dev-security-usgovva"
         },
-        "securityVnetAddressPrefix": {
-            "value": "10.15.0.0/24"
+        "securityVnetCidr": {
+            "value": "10.216.3.0/24"
         },
-        "securitySubnet1Prefix": {
-            "value": "10.15.0.0/24"
+        "securityBastionSnCidr": {
+            "value": "10.216.3.0/27"
         },
-        "securitySubnet1Name": {
-            "value": "securityVnet-01-sn01"
+        "securityNsgName": {
+            "value": "nsg-dev-security-usgovva"
         },
         "identityVnetName": {
-            "value": "identityVnet-01"
+            "value": "vnet-10.216.2.0_24-dev-identity-usgovva"
         },
         "identityVnetCidr": {
             "value": "10.216.2.0/24"
-        },
-        "dnsServers": {
-            "value": [
-                "10.216.2.36",
-                "10.216.2.37"
-            ]
         },
         "identityBastionSnCidr": {
             "value": "10.216.2.0/27"
@@ -120,16 +120,19 @@
             "value": "nsg-dev-identity-usgovva"
         },
         "devopsVnetName": {
-            "value": "devopsVnet-01"
+            "value": "vnet-10.216.4.0_24-dev-devops-usgovva"
         },
-        "devopsVnetAddressPrefix": {
-            "value": "10.17.0.0/24"
+        "devopsVnetCidr": {
+            "value": "10.216.4.0/24"
         },
-        "devopsSubnet1Prefix": {
-            "value": "10.17.0.0/24"
+        "devopsBastionSnCidr": {
+            "value": "10.216.4.0/27"
         },
-        "devopsSubnet1Name": {
-            "value": "devopsVnet-01-sn01"
+        "devopsGhSnCidr": {
+            "value": "10.216.4.32/27"
+        },
+        "devopsNsgName": {
+            "value": "nsg-dev-devops-usgovva"
         }
     }
 }

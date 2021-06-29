@@ -5,7 +5,7 @@
     "location": {
       "type": "string",
       "metadata":{
-        "description": "Specify the location for the resources."
+        "description": "Location for resources."
       }
     },
     "vwanResourceGroup": {
@@ -102,7 +102,12 @@
           "description": "Name of the Devops vnet resource group."
       }
     },
-    
+    "dnsServers": {
+      "type": "array",
+      "metadata": {
+        "description": "Dns Servers"
+      }
+    },
     "commonVnetName": {
       "type": "string",
       "metadata": {
@@ -112,25 +117,25 @@
     "commonVnetAddressPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Common Address prefix"
+        "description": "Common Address Cidr"
       }
     },
     "commonCmpeSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Common CMPE sn Cidr"
+        "description": "Common CMPE subnet Cidr"
       }
     },
     "commonSnowMidsSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Common SNOW Mid Servers sn Cidr"
+        "description": "Common SNOW Mid Servers subnet Cidr"
       }
     },
     "commonGhRunnersSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Common GH Runners sn Cidr"
+        "description": "Common Github Runners subnet Cidr"
       }
     },
     "commonNsgName": {
@@ -145,22 +150,22 @@
         "description": "Management VNet name"
       }
     },
-    "managementVnetAddressPrefix": {
+    "managementVnetCidr": {
       "type": "string",
       "metadata": {
-        "description": "Management Address prefix"
+        "description": "Management Address Cidr"
       }
     },
-    "managementSubnet1Prefix": {
+    "managementBastionSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Management Subnet 1 Prefix"
+        "description": "Management bastion subnet name"
       }
     },
-    "managementSubnet1Name": {
+    "managementNsgName": {
       "type": "string",
       "metadata": {
-        "description": "ManagementSubnet 1 Name"
+        "description": "Management NSG Name"
       }
     },
     "securityVnetName": {
@@ -169,22 +174,22 @@
         "description": "Security VNet name"
       }
     },
-    "securityVnetAddressPrefix": {
+    "securityVnetCidr": {
       "type": "string",
       "metadata": {
-        "description": "Security Address prefix"
+        "description": "Security Vnet Cidr"
       }
     },
-    "securitySubnet1Prefix": {
+    "securityBastionSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Security Subnet 1 Prefix"
+        "description": "Security bastion subnet Cidr"
       }
     },
-    "securitySubnet1Name": {
+    "securityNsgName": {
       "type": "string",
       "metadata": {
-        "description": "Security subnet 1 Name"
+        "description": "Security NSG Name"
       }
     },
     "identityVnetName": {
@@ -199,34 +204,28 @@
         "description": "Identity VNet Cidr"
       }
     },
-    "dnsServers": {
-      "type": "array",
-      "metadata": {
-        "description": "Identity Dns Servers"
-      }
-    },
     "identityBastionSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Identity bastion sn Cidr"
+        "description": "Identity bastion subnet Cidr"
       }
     },
     "identityAdSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Identity AD sn Cidr"
+        "description": "Identity AD subnet Cidr"
       }
     },
     "identityPamSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Identity PAM sn Cidr"
+        "description": "Identity PAM subnet Cidr"
       }
     },
     "identitySailpointSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Identity Sailpoint sn Cidr"
+        "description": "Identity Sailpoint subnet Cidr"
       }
     },
     "identityNsgName": {
@@ -241,22 +240,29 @@
         "description": "Devops VNet name"
       }
     },
-    "devopsVnetAddressPrefix": {
+    "devopsVnetCidr": {
       "type": "string",
       "metadata": {
-        "description": "Devops Address prefix"
+        "description": "Devops Address Cidr"
       }
     },
-    "devopsSubnet1Prefix": {
+    
+    "devopsGhSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Devops Subnet 1 Prefix"
+        "description": "Devops Github subnet Cidr"
       }
     },
-    "devopsSubnet1Name": {
+    "devopsBastionSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Devops subnet 1 Name"
+        "description": "Devops Bastion subnet Cidr"
+      }
+    },
+    "devopsNsgName": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops NSG Name"
       }
     }
   },
@@ -469,24 +475,27 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetManagement.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
+          "networkSecurityGroupName": {
+            "value": "[parameters('managementNsgName')]"
+          },
           "vnetName": {
             "value": "[parameters('managementVnetName')]"
           },
-          "vnetAddressPrefix": {
-            "value": "[parameters('managementVnetAddressPrefix')]"
-          },
-          "subnet1Name": {
-            "value": "[parameters('managementSubnet1Name')]"
-          },
-          "subnet1Prefix": {
-            "value": "[parameters('managementSubnet1Prefix')]"
-          },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "vnetCidr": {
+            "value": "[parameters('managementVnetCidr')]"
+          },
+          "dnsServers": {
+            "value": "[parameters('dnsServers')]"
+          },
+          "bastionSnCidr": {
+            "value": "[parameters('managementBastionSnCidr')]"
           }
         }
       }
@@ -502,24 +511,27 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSecurity.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
+          "networkSecurityGroupName": {
+            "value": "[parameters('securityNsgName')]"
+          },
           "vnetName": {
             "value": "[parameters('securityVnetName')]"
           },
-          "vnetAddressPrefix": {
-            "value": "[parameters('securityVnetAddressPrefix')]"
-          },
-          "subnet1Name": {
-            "value": "[parameters('securitySubnet1Name')]"
-          },
-          "subnet1Prefix": {
-            "value": "[parameters('securitySubnet1Prefix')]"
-          },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "vnetCidr": {
+            "value": "[parameters('securityVnetCidr')]"
+          },
+          "dnsServers": {
+            "value": "[parameters('dnsServers')]"
+          },
+          "bastionSnCidr": {
+            "value": "[parameters('securityBastionSnCidr')]"
           }
         }
       }
@@ -580,24 +592,30 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetDevops.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
+          "networkSecurityGroupName": {
+            "value": "[parameters('devopsNsgName')]"
+          },
           "vnetName": {
             "value": "[parameters('devopsVnetName')]"
           },
-          "vnetAddressPrefix": {
-            "value": "[parameters('devopsVnetAddressPrefix')]"
-          },
-          "subnet1Name": {
-            "value": "[parameters('devopsSubnet1Name')]"
-          },
-          "subnet1Prefix": {
-            "value": "[parameters('devopsSubnet1Prefix')]"
-          },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "vnetCidr": {
+            "value": "[parameters('devopsVnetCidr')]"
+          },
+          "dnsServers": {
+            "value": "[parameters('dnsServers')]"
+          },
+          "bastionSnCidr": {
+            "value": "[parameters('devopsBastionSnCidr')]"
+          },
+          "githubSnCidr": {
+            "value": "[parameters('devopsGhSnCidr')]"
           }
         }
       }
