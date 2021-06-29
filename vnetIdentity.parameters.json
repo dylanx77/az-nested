@@ -3,22 +3,19 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "bastionHostName": {
-            "value": null
+            "value": "bastion-dev-identity-usgovva"
         },
         "networkSecurityGroupName": {
-            "value": null
+            "value": "nsg-dev-identity-usgovva"
         },
         "vnetName": {
-            "value": null
+            "value": "vnet-10.216.2.0_24-dev-identity-usgovva"
         },
         "bastionPipName": {
-            "value": null
-        },
-        "virtualNetworks_HV_hub_dev_network_usgo_7e5472a9_105e_4682_88b8_05ffec52f268_externalid": {
-            "value": null
+            "value": "pip-bastion-dev-identity-usgovva"
         },
         "location":{
-            "value": null
+            "value": "eastus"
         }
     }
 }

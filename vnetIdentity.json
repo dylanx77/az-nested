@@ -3,27 +3,18 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "bastionHostName": {
-            "defaultValue": "bastion-dev-identity-usgovva",
             "type": "String"
         },
         "networkSecurityGroupName": {
-            "defaultValue": "nsg-dev-identity-usgovva",
             "type": "String"
         },
         "vnetName": {
-            "defaultValue": "vnet-10.216.2.0_24-dev-identity-usgovva",
             "type": "String"
         },
         "bastionPipName": {
-            "defaultValue": "pip-bastion-dev-identity-usgovva",
-            "type": "String"
-        },
-        "virtualNetworks_HV_hub_dev_network_usgo_7e5472a9_105e_4682_88b8_05ffec52f268_externalid": {
-            "defaultValue": "/subscriptions/50c65576-3ab6-4b3d-aa71-72a6c8662fe4/resourceGroups/RG_hub-dev-network-usgovva_fb050fcc-cd26-4452-9a62-de928daf6f18/providers/Microsoft.Network/virtualNetworks/HV_hub-dev-network-usgo_7e5472a9-105e-4682-88b8-05ffec52f268",
             "type": "String"
         },
         "location": {
-            "defaultValue": "eastus",
             "type": "String"
         }
     },
