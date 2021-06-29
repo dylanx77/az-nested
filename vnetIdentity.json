@@ -2,16 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "bastionHostName": {
-            "type": "String"
-        },
         "networkSecurityGroupName": {
             "type": "String"
         },
         "vnetName": {
-            "type": "String"
-        },
-        "bastionPipName": {
             "type": "String"
         },
         "location": {
@@ -28,36 +22,7 @@
             "properties": {
                 "securityRules": []
             }
-        },
-        {
-            "type": "Microsoft.Network/bastionHosts",
-            "apiVersion": "2020-11-01",
-            "name": "[parameters('bastionHostName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), 'AzureBastionSubnet')]"
-            ],
-            "sku": {
-                "name": "Basic"
-            },
-            "properties": {
-                "dnsName": "bst-dc61b48e-6721-420c-85de-226ec302808f.bastion.usgovcloudapi.net",
-                "ipConfigurations": [
-                    {
-                        "name": "IpConf",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[parameters('bastionPipName')]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), 'AzureBastionSubnet')]"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
+        },         
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
