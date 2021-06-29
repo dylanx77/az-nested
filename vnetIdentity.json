@@ -11,6 +11,18 @@
         "vnetCidr": {
             "type": "String"
         },
+        "bastionSnCidr": {
+            "type": "String"
+        },
+        "adSnCidr": {
+            "type": "String"
+        },
+        "pamSnCidr": {
+            "type": "String"
+        },
+        "sailpointSnCidr": {
+            "type": "String"
+        },
         "location": {
             "type": "String"
         }
@@ -50,7 +62,7 @@
                     {
                         "name": "AzureBastionSubnet",
                         "properties": {
-                            "addressPrefix": "10.216.2.0/27",
+                            "addressPrefix": "[parameters('bastionSnCidr')]",
                             "delegations": [],
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
@@ -59,7 +71,7 @@
                     {
                         "name": "subnet-10.216.2.32_27-dev-activedirectory",
                         "properties": {
-                            "addressPrefix": "10.216.2.32/27",
+                            "addressPrefix": "[parameters('adSnCidr')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
                             },
@@ -72,7 +84,7 @@
                     {
                         "name": "subnet-10.216.2.96_27-dev-pam",
                         "properties": {
-                            "addressPrefix": "10.216.2.96/27",
+                            "addressPrefix": "[parameters('pamSnCidr')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
                             },
@@ -85,7 +97,7 @@
                     {
                         "name": "subnet-10.216.2.64_27-dev-sailpoint",
                         "properties": {
-                            "addressPrefix": "10.216.2.64/27",
+                            "addressPrefix": "[parameters('sailpointSnCidr')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
                             },
