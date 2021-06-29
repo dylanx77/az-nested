@@ -51,16 +51,22 @@
             "value": "devops-vnet-rg-01"
         },
         "commonVnetName": {
-            "value": "commonVnet-01"
+            "value": "common-vnet-01"
         },
         "commonVnetAddressPrefix": {
-            "value": "10.13.0.0/24"
+            "value": "10.216.5.0/24"
         },
-        "commonSubnet1Prefix": {
-            "value": "10.13.0.0/24"
+        "commonCmpeSnCidr": {
+            "value": "10.216.5.0/27"
         },
-        "commonSubnet1Name": {
-            "value": "commonVnet-01-sn01"
+        "commonSnowMidsSnCidr": {
+            "value": "10.216.5.64/27"
+        },
+        "commonGhRunnersSnCidr": {
+            "value": "10.216.5.96/27"
+        },
+        "commonNsgName": {
+            "value": "nsg-dev-common-usgovva"
         },
         "managementVnetName": {
             "value": "managementVnet-01"
@@ -92,7 +98,7 @@
         "identityVnetCidr": {
             "value": "10.216.2.0/24"
         },
-        "identityDnsServers": {
+        "dnsServers": {
             "value": [
                 "10.216.2.36",
                 "10.216.2.37"

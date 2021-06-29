@@ -115,16 +115,28 @@
         "description": "Common Address prefix"
       }
     },
-    "commonSubnet1Prefix": {
+    "commonCmpeSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Common Subnet 1 Prefix"
+        "description": "Common CMPE sn Cidr"
       }
     },
-    "commonSubnet1Name": {
+    "commonSnowMidsSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Common Subnet 1 Name"
+        "description": "Common SNOW Mid Servers sn Cidr"
+      }
+    },
+    "commonGhRunnersSnCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Common GH Runners sn Cidr"
+      }
+    },
+    "commonNsgName": {
+      "type": "string",
+      "metadata": {
+        "description": "Common NSG Name"
       }
     },
     "managementVnetName": {
@@ -187,7 +199,7 @@
         "description": "Identity VNet Cidr"
       }
     },
-    "identityDnsServers": {
+    "dnsServers": {
       "type": "array",
       "metadata": {
         "description": "Identity Dns Servers"
@@ -415,24 +427,33 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetCommon.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
+          "networkSecurityGroupName": {
+            "value": "[parameters('commonNsgName')]"
+          },
           "vnetName": {
             "value": "[parameters('commonVnetName')]"
           },
-          "vnetAddressPrefix": {
+          "vnetCidr": {
             "value": "[parameters('commonVnetAddressPrefix')]"
-          },
-          "subnet1Name": {
-            "value": "[parameters('commonSubnet1Name')]"
-          },
-          "subnet1Prefix": {
-            "value": "[parameters('commonSubnet1Prefix')]"
           },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "cmpeSnCidr": {
+            "value": "[parameters('commonCmpeSnCidr')]"
+          },
+          "snowMidsSnCidr": {
+            "value": "[parameters('commonSnowMidsSnCidr')]"
+          },
+          "ghRunnersSnCidr": {
+            "value": "[parameters('commonGhRunnersSnCidr')]"
+          },
+          "dnsServers": {
+            "value": "[parameters('dnsServers')]"
           }
         }
       }
@@ -531,7 +552,7 @@
             "value": "[parameters('identityVnetCidr')]"
           },
           "dnsServers": {
-            "value": "[parameters('identityDnsServers')]"
+            "value": "[parameters('dnsServers')]"
           },
           "bastionSnCidr": {
             "value": "[parameters('identityBastionSnCidr')]"
