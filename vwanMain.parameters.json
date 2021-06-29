@@ -102,10 +102,10 @@
             "value": "devopsVnet-01"
         },
         "devopsVnetAddressPrefix": {
-            "value": "10.16.0.0/24"
+            "value": "10.17.0.0/24"
         },
         "devopsSubnet1Prefix": {
-            "value": "10.16.0.0/24"
+            "value": "10.17.0.0/24"
         },
         "devopsSubnet1Name": {
             "value": "devopsVnet-01-sn01"
