@@ -57,7 +57,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "subnet-10.216.5.0_27-avd-cmpe",
+                        "name": "subnet-cmpe",
                         "properties": {
                             "addressPrefix": "[parameters('cmpeSnCidr')]",
                             "networkSecurityGroup": {
@@ -69,7 +69,7 @@
                         }
                     },
                     {
-                        "name": "subnet-10.216.5.64_27-dev-snow-mids",
+                        "name": "subnet-dev-snow-mids",
                         "properties": {
                             "addressPrefix": "[parameters('snowMidsSnCidr')]",
                             "networkSecurityGroup": {
@@ -82,7 +82,7 @@
                         }
                     },
                     {
-                        "name": "subnet-10.216.5.96_27-dev-github-runners",
+                        "name": "subnet-dev-github-runners",
                         "properties": {
                             "addressPrefix": "[parameters('ghRunnersSnCidr')]",
                             "networkSecurityGroup": {
@@ -90,7 +90,7 @@
                             },
                             "serviceEndpoints": [],
                             "delegations": [],
-                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
                         }
                     }
