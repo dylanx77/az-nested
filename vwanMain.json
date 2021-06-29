@@ -150,6 +150,78 @@
       "metadata": {
         "description": "ManagementSubnet 1 Name"
       }
+    },
+    "securityVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Security VNet name"
+      }
+    },
+    "securityVnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Security Address prefix"
+      }
+    },
+    "securitySubnet1Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Security Subnet 1 Prefix"
+      }
+    },
+    "securitySubnet1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Security subnet 1 Name"
+      }
+    },
+    "identityVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity VNet name"
+      }
+    },
+    "identityVnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity Address prefix"
+      }
+    },
+    "identitySubnet1Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity Subnet 1 Prefix"
+      }
+    },
+    "identitySubnet1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity subnet 1 Name"
+      }
+    },
+    "devopsVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops VNet name"
+      }
+    },
+    "devopsVnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops Address prefix"
+      }
+    },
+    "devopsSubnet1Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops Subnet 1 Prefix"
+      }
+    },
+    "devopsSubnet1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops subnet 1 Name"
+      }
     }
   },
   "variables": {
@@ -212,7 +284,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "securityRgDeployment",
+      "name": "securityVnetRgDeployment",
       "subscriptionId": "[parameters('securitySubId')]",
       "location": "[parameters('location')]",
       "properties": {
@@ -234,7 +306,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "identityRgDeployment",
+      "name": "identityVnetRgDeployment",
       "subscriptionId": "[parameters('identitySubId')]",
       "location": "[parameters('location')]",
       "properties": {
@@ -256,7 +328,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "devopsRgDeployment",
+      "name": "devopsVnetRgDeployment",
       "subscriptionId": "[parameters('devopsSubId')]",
       "location": "[parameters('location')]",
       "properties": {
@@ -311,7 +383,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "vnetCommonDeployment",
+      "name": "commongVnetDeployment",
       "resourceGroup": "[parameters('commonVnetResourceGroup')]",
       "dependsOn": [
         "commonVnetRgDeployment"
@@ -344,7 +416,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "vnetManagementDeployment",
+      "name": "managementVnetDeployment",
       "resourceGroup": "[parameters('managementVnetResourceGroup')]",
       "dependsOn": [
         "managementVnetRgDeployment"
@@ -377,8 +449,8 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "vnetSecurityDeployment",
-      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "name": "securityVnetDeployment",
+      "resourceGroup": "[parameters('securityVnetResourceGroup')]",
       "dependsOn": [
         "securityVnetRgDeployment"
       ],
@@ -390,16 +462,16 @@
         },
         "parameters": {
           "vnetName": {
-            "value": "[parameters('commonVnetName')]"
+            "value": "[parameters('securityVnetName')]"
           },
           "vnetAddressPrefix": {
-            "value": "[parameters('commonVnetAddressPrefix')]"
+            "value": "[parameters('securityVnetAddressPrefix')]"
           },
           "subnet1Name": {
-            "value": "[parameters('commonSubnet1Name')]"
+            "value": "[parameters('securitySubnet1Name')]"
           },
           "subnet1Prefix": {
-            "value": "[parameters('commonSubnet1Prefix')]"
+            "value": "[parameters('securitySubnet1Prefix')]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -410,10 +482,10 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "vnetCommonDeployment",
-      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "name": "IdentityVnetDeployment",
+      "resourceGroup": "[parameters('identityVnetResourceGroup')]",
       "dependsOn": [
-        "commonVnetRgDeployment"
+        "identityVnetRgDeployment"
       ],
       "properties": {
         "mode": "Incremental",
@@ -423,16 +495,16 @@
         },
         "parameters": {
           "vnetName": {
-            "value": "[parameters('commonVnetName')]"
+            "value": "[parameters('identityVnetName')]"
           },
           "vnetAddressPrefix": {
-            "value": "[parameters('commonVnetAddressPrefix')]"
+            "value": "[parameters('identityVnetAddressPrefix')]"
           },
           "subnet1Name": {
-            "value": "[parameters('commonSubnet1Name')]"
+            "value": "[parameters('identitySubnet1Name')]"
           },
           "subnet1Prefix": {
-            "value": "[parameters('commonSubnet1Prefix')]"
+            "value": "[parameters('identitySubnet1Prefix')]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -443,10 +515,10 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "vnetCommonDeployment",
-      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "name": "devopsVnetDeployment",
+      "resourceGroup": "[parameters('devopsVnetResourceGroup')]",
       "dependsOn": [
-        "commonVnetRgDeployment"
+        "devopsVnetRgDeployment"
       ],
       "properties": {
         "mode": "Incremental",
@@ -456,16 +528,16 @@
         },
         "parameters": {
           "vnetName": {
-            "value": "[parameters('commonVnetName')]"
+            "value": "[parameters('devopsVnetName')]"
           },
           "vnetAddressPrefix": {
-            "value": "[parameters('commonVnetAddressPrefix')]"
+            "value": "[parameters('devopsVnetAddressPrefix')]"
           },
           "subnet1Name": {
-            "value": "[parameters('commonSubnet1Name')]"
+            "value": "[parameters('devopsSubnet1Name')]"
           },
           "subnet1Prefix": {
-            "value": "[parameters('commonSubnet1Prefix')]"
+            "value": "[parameters('devopsSubnet1Prefix')]"
           },
           "location": {
             "value": "[parameters('location')]"
