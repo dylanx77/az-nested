@@ -61,6 +61,54 @@
         },
         "commonSubnet1Name": {
             "value": "commonVnet-01-sn01"
+        },
+        "managementVnetName": {
+            "value": "managementVnet-01"
+        },
+        "managementVnetAddressPrefix": {
+            "value": "10.14.0.0/24"
+        },
+        "managementSubnet1Prefix": {
+            "value": "10.14.0.0/24"
+        },
+        "managementSubnet1Name": {
+            "value": "securityVnet-01-sn01"
+        },
+        "securityVnetName": {
+            "value": "securityVnet-01"
+        },
+        "securityVnetAddressPrefix": {
+            "value": "10.15.0.0/24"
+        },
+        "securitySubnet1Prefix": {
+            "value": "10.15.0.0/24"
+        },
+        "securitySubnet1Name": {
+            "value": "securityVnet-01-sn01"
+        },
+        "identityVnetName": {
+            "value": "identityVnet-01"
+        },
+        "identityVnetAddressPrefix": {
+            "value": "10.16.0.0/24"
+        },
+        "identitySubnet1Prefix": {
+            "value": "10.16.0.0/24"
+        },
+        "identitySubnet1Name": {
+            "value": "identityVnet-01-sn01"
+        },
+        "devopsVnetName": {
+            "value": "devopsVnet-01"
+        },
+        "devopsVnetAddressPrefix": {
+            "value": "10.16.0.0/24"
+        },
+        "devopsSubnet1Prefix": {
+            "value": "10.16.0.0/24"
+        },
+        "devopsSubnet1Name": {
+            "value": "devopsVnet-01-sn01"
         }
     }
 }

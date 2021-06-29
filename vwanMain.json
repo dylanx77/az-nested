@@ -106,25 +106,49 @@
     "commonVnetName": {
       "type": "string",
       "metadata": {
-        "description": "VNet name"
+        "description": "Common VNet name"
       }
     },
     "commonVnetAddressPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Address prefix"
+        "description": "Common Address prefix"
       }
     },
     "commonSubnet1Prefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "Common Subnet 1 Prefix"
       }
     },
     "commonSubnet1Name": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Name"
+        "description": "Common Subnet 1 Name"
+      }
+    },
+    "managementVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Management VNet name"
+      }
+    },
+    "managementVnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Management Address prefix"
+      }
+    },
+    "managementSubnet1Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Management Subnet 1 Prefix"
+      }
+    },
+    "managementSubnet1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "ManagementSubnet 1 Name"
       }
     }
   },
@@ -289,6 +313,141 @@
       "apiVersion": "2020-06-01",
       "name": "vnetCommonDeployment",
       "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "dependsOn": [
+        "commonVnetRgDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('commonVnetName')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('commonVnetAddressPrefix')]"
+          },
+          "subnet1Name": {
+            "value": "[parameters('commonSubnet1Name')]"
+          },
+          "subnet1Prefix": {
+            "value": "[parameters('commonSubnet1Prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "vnetManagementDeployment",
+      "resourceGroup": "[parameters('managementVnetResourceGroup')]",
+      "dependsOn": [
+        "managementVnetRgDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('managementVnetName')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('managementVnetAddressPrefix')]"
+          },
+          "subnet1Name": {
+            "value": "[parameters('managementSubnet1Name')]"
+          },
+          "subnet1Prefix": {
+            "value": "[parameters('managementSubnet1Prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "vnetSecurityDeployment",
+      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "dependsOn": [
+        "securityVnetRgDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('commonVnetName')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('commonVnetAddressPrefix')]"
+          },
+          "subnet1Name": {
+            "value": "[parameters('commonSubnet1Name')]"
+          },
+          "subnet1Prefix": {
+            "value": "[parameters('commonSubnet1Prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "vnetCommonDeployment",
+      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "dependsOn": [
+        "commonVnetRgDeployment"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "vnetName": {
+            "value": "[parameters('commonVnetName')]"
+          },
+          "vnetAddressPrefix": {
+            "value": "[parameters('commonVnetAddressPrefix')]"
+          },
+          "subnet1Name": {
+            "value": "[parameters('commonSubnet1Name')]"
+          },
+          "subnet1Prefix": {
+            "value": "[parameters('commonSubnet1Prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "vnetCommonDeployment",
+      "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+      "dependsOn": [
+        "commonVnetRgDeployment"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
