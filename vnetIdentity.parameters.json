@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "bastionHostName": {
+            "value": null
+        },
+        "networkSecurityGroupName": {
+            "value": null
+        },
+        "vnetName": {
+            "value": null
+        },
+        "bastionPipName": {
+            "value": null
+        },
+        "virtualNetworks_HV_hub_dev_network_usgo_7e5472a9_105e_4682_88b8_05ffec52f268_externalid": {
+            "value": null
+        },
+        "location":{
+            "value": null
+        }
+    }
+}
