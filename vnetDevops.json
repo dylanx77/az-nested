@@ -54,7 +54,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "AzureBastionSubnet",
+                        "name": "bastion-sn",
                         "properties": {
                             "addressPrefix": "[parameters('bastionSnCidr')]",
                             "networkSecurityGroup": {
