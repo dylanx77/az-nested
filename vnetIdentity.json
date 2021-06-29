@@ -11,6 +11,9 @@
         "vnetCidr": {
             "type": "String"
         },
+        "dnsServers": {
+            "type": "array"
+        },
         "bastionSnCidr": {
             "type": "String"
         },
@@ -53,10 +56,7 @@
                     ]
                 },
                 "dhcpOptions": {
-                    "dnsServers": [
-                        "10.216.2.36",
-                        "10.216.2.37"
-                    ]
+                    "dnsServers": "[parameters('dnsServers')]"
                 },
                 "subnets": [
                     {
