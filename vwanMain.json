@@ -181,22 +181,46 @@
         "description": "Identity VNet name"
       }
     },
-    "identityVnetAddressPrefix": {
+    "identityVnetCidr": {
       "type": "string",
       "metadata": {
-        "description": "Identity Address prefix"
+        "description": "Identity VNet Cidr"
       }
     },
-    "identitySubnet1Prefix": {
-      "type": "string",
+    "identityDnsServers": {
+      "type": "array",
       "metadata": {
-        "description": "Identity Subnet 1 Prefix"
+        "description": "Identity Dns Servers"
       }
     },
-    "identitySubnet1Name": {
+    "identityBastionSnCidr": {
       "type": "string",
       "metadata": {
-        "description": "Identity subnet 1 Name"
+        "description": "Identity bastion sn Cidr"
+      }
+    },
+    "identityAdSnCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity AD sn Cidr"
+      }
+    },
+    "identityPamSnCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity PAM sn Cidr"
+      }
+    },
+    "identitySailpointSnCidr": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity Sailpoint sn Cidr"
+      }
+    },
+    "identityNsgName": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity NSG Name"
       }
     },
     "devopsVnetName": {
@@ -383,7 +407,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "commongVnetDeployment",
+      "name": "commonVnetDeployment",
       "resourceGroup": "[parameters('commonVnetResourceGroup')]",
       "dependsOn": [
         "commonVnetRgDeployment"
@@ -490,24 +514,36 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetIdentity.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
+          "networkSecurityGroupName": {
+            "value": "[parameters('identityNsgName')]"
+          },
           "vnetName": {
             "value": "[parameters('identityVnetName')]"
           },
-          "vnetAddressPrefix": {
-            "value": "[parameters('identityVnetAddressPrefix')]"
-          },
-          "subnet1Name": {
-            "value": "[parameters('identitySubnet1Name')]"
-          },
-          "subnet1Prefix": {
-            "value": "[parameters('identitySubnet1Prefix')]"
-          },
           "location": {
             "value": "[parameters('location')]"
+          },
+          "vnetCidr": {
+            "value": "[parameters('identityVnetCidr')]"
+          },
+          "dnsServers": {
+            "value": "[parameters('identityDnsServers')]"
+          },
+          "bastionSnCidr": {
+            "value": "[parameters('identityBastionSnCidr')]"
+          },
+          "adSnCidr": {
+            "value": "[parameters('identityAdSnCidr')]"
+          },
+          "pamSnCidr": {
+            "value": "[parameters('identityPamSnCidr')]"
+          },
+          "sailpointSnCidr": {
+            "value": "[parameters('identitySailpointSnCidr')]"
           }
         }
       }

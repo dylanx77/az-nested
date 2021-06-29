@@ -89,14 +89,29 @@
         "identityVnetName": {
             "value": "identityVnet-01"
         },
-        "identityVnetAddressPrefix": {
-            "value": "10.16.0.0/24"
+        "identityVnetCidr": {
+            "value": "10.216.2.0/24"
         },
-        "identitySubnet1Prefix": {
-            "value": "10.16.0.0/24"
+        "identityDnsServers": {
+            "value": [
+                "10.216.2.36",
+                "10.216.2.37"
+            ]
         },
-        "identitySubnet1Name": {
-            "value": "identityVnet-01-sn01"
+        "identityBastionSnCidr": {
+            "value": "10.216.2.0/27"
+        },
+        "identityAdSnCidr": {
+            "value": "10.216.2.32/27"
+        },
+        "identityPamSnCidr": {
+            "value": "10.216.2.96/27"
+        },
+        "identitySailpointSnCidr": {
+            "value": "10.216.2.64/27"
+        },
+        "identityNsgName": {
+            "value": "nsg-dev-identity-usgovva"
         },
         "devopsVnetName": {
             "value": "devopsVnet-01"
