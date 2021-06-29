@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": {
@@ -42,12 +42,67 @@
           "description": "The hub address prefix. This address prefix will be used as the address prefix for the hub vnet"
       }
     },
+    "commonSubId": {
+      "type": "string",
+      "metadata": {
+          "description": "Subscription ID of the common subscription"
+      }
+    },
+    "managementSubId": {
+      "type": "string",
+      "metadata": {
+          "description": "Subscription ID of the management subscription"
+      }
+    },
+    "securitySubId": {
+      "type": "string",
+      "metadata": {
+          "description": "Subscription ID of the security subscription"
+      }
+    },
+    "identitySubId": {
+      "type": "string",
+      "metadata": {
+          "description": "Subscription ID of the identity subscription"
+      }
+    },
+    "devopsSubId": {
+      "type": "string",
+      "metadata": {
+          "description": "Subscription ID of the devops subscription"
+      }
+    },
     "commonVnetResourceGroup": {
       "type": "string",
       "metadata": {
           "description": "Name of the Common vnet resource group."
       }
     },
+    "managementVnetResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Management vnet resource group."
+      }
+    },
+    "securityVnetResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Security vnet resource group."
+      }
+    },
+    "identityVnetResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Identity vnet resource group."
+      }
+    },
+    "devopsVnetResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the Devops vnet resource group."
+      }
+    },
+    
     "commonVnetName": {
       "type": "string",
       "metadata": {
@@ -87,14 +142,114 @@
       "properties": {}
     },
     {
-      "type": "Microsoft.Resources/resourceGroups",
+      "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
-      "name": "[parameters('commonVnetResourceGroup')]",
+      "name": "commonVnetRgDeployment",
+      "subscriptionId": "[parameters('commonSubId')]",
       "location": "[parameters('location')]",
-      "tags": {
-        "Note": "subscription level deployment"
-      },
-      "properties": {}
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('commonVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "managementVnetRgDeployment",
+      "subscriptionId": "[parameters('managementSubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('managementVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "securityRgDeployment",
+      "subscriptionId": "[parameters('securitySubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('securityVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "identityRgDeployment",
+      "subscriptionId": "[parameters('identitySubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('identityVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "devopsRgDeployment",
+      "subscriptionId": "[parameters('devopsSubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('devopsVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -107,7 +262,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/vwanLinked.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanLinked.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
@@ -134,13 +289,10 @@
       "apiVersion": "2020-06-01",
       "name": "vnetCommonDeployment",
       "resourceGroup": "[parameters('commonVnetResourceGroup')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/resourceGroups/', parameters('commonVnetResourceGroup'))]"
-      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/artifacts/vnetSingleSubnet.json",
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetSingleSubnetLinked.json",
           "contentVersion":"1.0.0.0"
         },
         "parameters": {
