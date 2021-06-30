@@ -78,6 +78,12 @@
           "description": "Name of the Common vnet resource group."
       }
     },
+    "nwWatcherResourceGroup": {
+      "type": "string",
+      "metadata": {
+          "description": "Name of the NetworkWatcher resource group."
+      }
+    },
     "managementVnetResourceGroup": {
       "type": "string",
       "metadata": {
@@ -192,6 +198,18 @@
         "description": "Security NSG Name"
       }
     },
+    "securityPublicIpAddressForBastion": {
+      "type": "string",
+      "metadata": {
+        "description": "Security Bastion Host public ip address"
+      }
+    },
+    "securityBastionName": {
+      "type": "string",
+      "metadata": {
+        "description": "Security Bastion host name"
+      }
+    },
     "identityVnetName": {
       "type": "string",
       "metadata": {
@@ -304,6 +322,28 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
+      "name": "commonNwWatcherRgDeployment",
+      "subscriptionId": "[parameters('commonSubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('nwWatcherResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
       "name": "managementVnetRgDeployment",
       "subscriptionId": "[parameters('managementSubId')]",
       "location": "[parameters('location')]",
@@ -316,6 +356,28 @@
         "parameters": {
           "rgName": {
             "value": "[parameters('managementVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "managementNwWatcherRgDeployment",
+      "subscriptionId": "[parameters('managementSubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('nwWatcherResourceGroup')]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -348,6 +410,28 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
+      "name": "securityNetworkWatcherRgDeployment",
+      "subscriptionId": "[parameters('securitySubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('nwWatcherResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
       "name": "identityVnetRgDeployment",
       "subscriptionId": "[parameters('identitySubId')]",
       "location": "[parameters('location')]",
@@ -370,6 +454,28 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-06-01",
+      "name": "identityNwWatcherRgDeployment",
+      "subscriptionId": "[parameters('identitySubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('nwWatcherResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
       "name": "devopsVnetRgDeployment",
       "subscriptionId": "[parameters('devopsSubId')]",
       "location": "[parameters('location')]",
@@ -382,6 +488,28 @@
         "parameters": {
           "rgName": {
             "value": "[parameters('devopsVnetResourceGroup')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-06-01",
+      "name": "devopsNwWatcherRgDeployment",
+      "subscriptionId": "[parameters('devopsSubId')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+          "contentVersion":"1.0.0.0"
+        },
+        "parameters": {
+          "rgName": {
+            "value": "[parameters('nwWatcherResourceGroup')]"
           },
           "location": {
             "value": "[parameters('location')]"
@@ -532,6 +660,12 @@
           },
           "bastionSnCidr": {
             "value": "[parameters('securityBastionSnCidr')]"
+          },
+          "publicIpAddressForBastion": {
+            "value": "[parameters('securityPublicIpAddressForBastion')]"
+          },
+          "bastionName": {
+            "value": "[parameters('securityBastionName')]"
           }
         }
       }

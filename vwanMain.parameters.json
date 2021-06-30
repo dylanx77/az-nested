@@ -50,6 +50,9 @@
         "devopsVnetResourceGroup": {
             "value": "rg-network-dev-devops-usgovva"
         },
+        "nwWatcherResourceGroup": {
+            "value": "NetworkWatcherRG"
+        },
         "dnsServers": {
             "value": [
                 "10.216.2.36",
@@ -97,6 +100,12 @@
         },
         "securityNsgName": {
             "value": "nsg-dev-security-usgovva"
+        },
+        "securityPublicIpAddressForBastion": {
+            "value": "pip-bastion-dev-security-usgovva"
+        },
+        "securityBastionName": {
+            "value": "bastion-dev-security-usgovva"
         },
         "identityVnetName": {
             "value": "vnet-10.216.2.0_24-dev-identity-usgovva"
