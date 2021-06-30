@@ -17,6 +17,12 @@
         "bastionSnCidr": {
             "type": "String"
         },
+        "publicIpAddressForBastion": {
+            "type": "String"
+        },
+        "bastionName": {
+            "type": "String"
+        },
         "location": {
             "type": "String"
         }
@@ -29,7 +35,78 @@
             "name": "[parameters('networkSecurityGroupName')]",
             "location": "[parameters('location')]",
             "properties": {
-                "securityRules": []
+                "securityRules": [
+                    {
+                        "name": "InboundFromAny",
+                        "properties": {
+                            "description": "Allow connection from any host on https.",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "InboundFromGM",
+                        "properties": {
+                            "description": "This enables the control plane, that is, Gateway Manager to be able to talk to Azure Bastion.",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "GatewayManager",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 120,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "OutboundToVNET_SSH",
+                        "properties": {
+                            "description": "Egress Traffic to target VMs: Azure Bastion will reach the target VMs over private IP and SSH port",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 120,
+                            "direction": "Outbound"
+                        }
+                    },
+                    {
+                        "name": "OutboundToVNET_RDP",
+                        "properties": {
+                            "description": "Egress Traffic to target VMs: Azure Bastion will reach the target VMs over private IP and RDP port",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Outbound"
+                        }
+                    },
+                    {
+                        "name": "OutboundHTTPStoAzureCloud",
+                        "properties": {
+                            "description": "Egress Traffic to other public endpoints in Azure",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "AzureCloud",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Outbound"
+                        }
+                    }
+                ]
             }
         },  
         {
@@ -51,7 +128,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "bastion-sn",
+                        "name": "AzureBastionSubnet",
                         "properties": {
                             "addressPrefix": "[parameters('bastionSnCidr')]",
                             "networkSecurityGroup": {
@@ -64,6 +141,43 @@
                     }                    
                 ],
                 "enableDdosProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2020-08-01",
+            "name": "[parameters('publicIpAddressForBastion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('bastionName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+                "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpAddressForBastion'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "IpConf",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), 'AzureBastionSubnet')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpAddressForBastion'))]"
+                            }
+                        }
+                    }
+                ]
             }
         }
     ],

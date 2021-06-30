@@ -174,6 +174,18 @@
         "description": "Management NSG Name"
       }
     },
+    "managementPublicIpAddressForBastion": {
+      "type": "string",
+      "metadata": {
+        "description": "Management Bastion Host public ip address"
+      }
+    },
+    "managementBastionName": {
+      "type": "string",
+      "metadata": {
+        "description": "Management Bastion host name"
+      }
+    },
     "securityVnetName": {
       "type": "string",
       "metadata": {
@@ -252,6 +264,18 @@
         "description": "Identity NSG Name"
       }
     },
+    "identityPublicIpAddressForBastion": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity Bastion Host public ip address"
+      }
+    },
+    "identityBastionName": {
+      "type": "string",
+      "metadata": {
+        "description": "Identity Bastion host name"
+      }
+    },
     "devopsVnetName": {
       "type": "string",
       "metadata": {
@@ -281,6 +305,18 @@
       "type": "string",
       "metadata": {
         "description": "Devops NSG Name"
+      }
+    },
+    "devopsPublicIpAddressForBastion": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops Bastion Host public ip address"
+      }
+    },
+    "devopsBastionName": {
+      "type": "string",
+      "metadata": {
+        "description": "Devops Bastion host name"
       }
     }
   },
@@ -624,6 +660,12 @@
           },
           "bastionSnCidr": {
             "value": "[parameters('managementBastionSnCidr')]"
+          },
+          "publicIpAddressForBastion": {
+            "value": "[parameters('managementPublicIpAddressForBastion')]"
+          },
+          "bastionName": {
+            "value": "[parameters('managementBastionName')]"
           }
         }
       }
@@ -711,6 +753,12 @@
           },
           "sailpointSnCidr": {
             "value": "[parameters('identitySailpointSnCidr')]"
+          },
+          "publicIpAddressForBastion": {
+            "value": "[parameters('identityPublicIpAddressForBastion')]"
+          },
+          "bastionName": {
+            "value": "[parameters('identityBastionName')]"
           }
         }
       }
@@ -750,6 +798,12 @@
           },
           "githubSnCidr": {
             "value": "[parameters('devopsGhSnCidr')]"
+          },
+          "publicIpAddressForBastion": {
+            "value": "[parameters('devopsPublicIpAddressForBastion')]"
+          },
+          "bastionName": {
+            "value": "[parameters('devopsBastionName')]"
           }
         }
       }

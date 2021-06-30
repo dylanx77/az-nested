@@ -89,6 +89,12 @@
         "managementNsgName": {
             "value": "nsg-dev-management-usgovva"
         },
+        "managementPublicIpAddressForBastion": {
+            "value": "pip-bastion-dev-management-usgovva"
+        },
+        "managementBastionName": {
+            "value": "bastion-dev-management-usgovva"
+        },
         "securityVnetName": {
             "value": "vnet-10.216.3.0_24-dev-security-usgovva"
         },
@@ -128,6 +134,12 @@
         "identityNsgName": {
             "value": "nsg-dev-identity-usgovva"
         },
+        "identityPublicIpAddressForBastion": {
+            "value": "pip-bastion-dev-identity-usgovva"
+        },
+        "identityBastionName": {
+            "value": "bastion-dev-identity-usgovva"
+        },
         "devopsVnetName": {
             "value": "vnet-10.216.4.0_24-dev-devops-usgovva"
         },
@@ -142,6 +154,12 @@
         },
         "devopsNsgName": {
             "value": "nsg-dev-devops-usgovva"
+        },
+        "devopsPublicIpAddressForBastion": {
+            "value": "pip-bastion-dev-devops-usgovva"
+        },
+        "devopsBastionName": {
+            "value": "bastion-dev-devops-usgovva"
         }
     }
 }

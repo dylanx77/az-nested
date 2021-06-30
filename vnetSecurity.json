@@ -47,15 +47,7 @@
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 100,
-                            "direction": "Inbound",
-                            "sourcePortRanges": [
-                            ],
-                            "destinationPortRanges": [
-                            ],
-                            "sourceAddressPrefixes": [
-                            ],
-                            "destinationAddressPrefixes": [
-                            ]
+                            "direction": "Inbound"
                         }
                     },
                     {
@@ -69,15 +61,7 @@
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 120,
-                            "direction": "Inbound",
-                            "sourcePortRanges": [
-                            ],
-                            "destinationPortRanges": [
-                            ],
-                            "sourceAddressPrefixes": [
-                            ],
-                            "destinationAddressPrefixes": [
-                            ]
+                            "direction": "Inbound"
                         }
                     },
                     {
@@ -91,15 +75,7 @@
                             "destinationAddressPrefix": "VirtualNetwork",
                             "access": "Allow",
                             "priority": 120,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [
-                            ],
-                            "destinationPortRanges": [
-                            ],
-                            "sourceAddressPrefixes": [
-                            ],
-                            "destinationAddressPrefixes": [
-                            ]
+                            "direction": "Outbound"
                         }
                     },
                     {
@@ -113,15 +89,7 @@
                             "destinationAddressPrefix": "VirtualNetwork",
                             "access": "Allow",
                             "priority": 110,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [
-                            ],
-                            "destinationPortRanges": [
-                            ],
-                            "sourceAddressPrefixes": [
-                            ],
-                            "destinationAddressPrefixes": [
-                            ]
+                            "direction": "Outbound"
                         }
                     },
                     {
@@ -135,15 +103,7 @@
                             "destinationAddressPrefix": "AzureCloud",
                             "access": "Allow",
                             "priority": 100,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [
-                            ],
-                            "destinationPortRanges": [
-                            ],
-                            "sourceAddressPrefixes": [
-                            ],
-                            "destinationAddressPrefixes": [
-                            ]
+                            "direction": "Outbound"
                         }
                     }
                 ]
