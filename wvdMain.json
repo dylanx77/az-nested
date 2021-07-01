@@ -14,16 +14,16 @@
                 "description": "Host pool name"
             }
         },
-        "customRdpProperty": {
+        "workspaceName": {
             "type": "string",
             "metadata": {
-                "description": "Hostpool rdp properties"
+                "description": "Workspace name"
             }
         },
-        "hostPoolFriendlyName": {
+        "applicationGroupName": {
             "type": "string",
             "metadata": {
-                "description": "Host pool friendly name"
+                "description": "ApplicationGroup name"
             }
         },
         "hostPoolDescription": {
@@ -75,12 +75,6 @@
                 "description": "Preferred App Group type to display"
             }
         },
-        "tokenExpirationTime": {
-            "type": "string",
-            "metadata": {
-                "description": "Token expiration time"
-            }
-        },
         "vmTemplate": {
             "type": "string",
             "metadata": {
@@ -122,11 +116,11 @@
                     "hostPoolName": {
                         "value": "[parameters('hostPoolName')]"
                     },
-                    "customRdpProperty": {
-                        "value": "[parameters('customRdpProperty')]"
+                    "applicationGroupName": {
+                        "value": "[parameters('applicationGroupName')]"
                     },
-                    "hostPoolFriendlyName": {
-                        "value": "[parameters('hostPoolFriendlyName')]"
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
                     },
                     "hostPoolDescription": {
                         "value": "[parameters('hostPoolDescription')]"
@@ -145,9 +139,6 @@
                     },
                     "preferredAppGroupType": {
                         "value": "[parameters('preferredAppGroupType')]"
-                    },
-                    "tokenExpirationTime": {
-                        "value": "[parameters('tokenExpirationTime')]"
                     },
                     "vmTemplate": {
                         "value": "[parameters('vmTemplate')]"

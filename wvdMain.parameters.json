@@ -8,14 +8,14 @@
         "hostPoolName": {
             "value": "hostpooltest01"
         },
-        "customRdpProperty": {
-            "value": ""
-        },
-        "hostPoolFriendlyName": {
-            "value": "hostpooltest01"
-        },
         "hostPoolDescription": {
-            "value": "Host pool dummy description"
+            "value": "WVD host pool"
+        },
+        "workspaceName": {
+            "value": "workspaceTest01"
+        },
+        "applicationGroupName": {
+            "value": "agTest01"
         },
         "hostPoolType": {
             "value": "Personal"
@@ -24,16 +24,13 @@
             "value": "Direct"
         },
         "loadBalancerType": {
-            "value": "BreadthFirst"
+            "value": "Persistent"
         },
         "validationEnvironment": {
             "value": false
         },
         "preferredAppGroupType": {
             "value": "Desktop"
-        },
-        "tokenExpirationTime": {
-            "value": ""
         },
         "vmTemplate": {
             "value": ""
