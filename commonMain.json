@@ -1,0 +1,181 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "avdResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the AVD resource group."
+            }
+        },
+        "ghRunnersResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the GH Runners resource group."
+            }
+        },
+        "midsResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Mids resource group."
+            }
+        },
+        "applicationGroupName": {
+            "type": "string",
+            "metadata": {
+                "description": "Application Group name"
+            }
+        },
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Workspace name"
+            }
+        },
+        "hostPoolName": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool name"
+            }
+        },
+        "hostPoolDescription": {
+            "type": "string",
+            "metadata": {
+                "description": "Host pool description"
+            }
+        },
+        "hostPoolType": {
+            "type": "string",
+            "allowedValues": [
+                "Personal",
+                "Pooled"
+            ],
+            "metadata": {
+                "description": "Set this parameter to Personal if you would like to enable Persistent Desktop experience. Defaults to false."
+            }
+        },
+        "personalDesktopAssignmentType": {
+            "type": "string",
+            "allowedValues": [
+                "Automatic",
+                "Direct"
+            ],
+            "metadata": {
+                "description": "Set the type of assignment for a Personal hostpool type"
+            }
+        },
+        "loadBalancerType": {
+            "type": "string",
+            "allowedValues": [
+                "BreadthFirst",
+                "DepthFirst",
+                "Persistent"
+            ],
+            "metadata": {
+                "description": "Type of load balancer algorithm."
+            }
+        },
+        "validationEnvironment": {
+            "type": "bool",
+            "metadata": {
+                "description": "Whether to use validation enviroment."
+            }
+        },
+        "preferredAppGroupType": {
+            "type": "string",
+            "metadata": {
+                "description": "Preferred App Group type to display"
+            }
+        },
+        "vmTemplate": {
+            "type": "string",
+            "metadata": {
+                "description": "VM Template for host pool VMs"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2020-06-01",
+            "name": "[parameters('avdResourceGroup')]",
+            "location": "[parameters('location')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2020-06-01",
+            "name": "[parameters('ghRunnersResourceGroup')]",
+            "location": "[parameters('location')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2020-06-01",
+            "name": "[parameters('midsResourceGroup')]",
+            "location": "[parameters('location')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "wvdDeployment",
+            "resourceGroup": "[parameters('avdResourceGroup')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', parameters('avdResourceGroup'))]"
+            ],            
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/wvdLinked.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "hostPoolName": {
+                        "value": "[parameters('hostPoolName')]"
+                    },
+                    "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                    },
+                    "applicationGroupName": {
+                        "value": "[parameters('applicationGroupName')]"
+                    },
+                    "hostPoolDescription": {
+                        "value": "[parameters('hostPoolDescription')]"
+                    },
+                    "hostPoolType": {
+                        "value": "[parameters('hostPoolType')]"
+                    },
+                    "personalDesktopAssignmentType": {
+                        "value": "[parameters('personalDesktopAssignmentType')]"
+                    },
+                    "loadBalancerType": {
+                        "value": "[parameters('loadBalancerType')]"
+                    },
+                    "validationEnvironment": {
+                        "value": "[parameters('validationEnvironment')]"
+                    },
+                    "preferredAppGroupType": {
+                        "value": "[parameters('preferredAppGroupType')]"
+                    },
+                    "vmTemplate": {
+                        "value": "[parameters('vmTemplate')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+      
+    }
+  }

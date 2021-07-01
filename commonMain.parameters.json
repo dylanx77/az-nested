@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "avdResourceGroup": {
+            "value": "rg-dev-common-avd-usgovva"
+        },
+        "ghRunnersResourceGroup": {
+            "value": "rg-dev-common-github-runners-usgovva"
+        },
+        "midsResourceGroup": {
+            "value": "rg-dev-common-mids-usgovva"
+        },
+        "workspaceName": {
+            "value": "avd-workspace-dev-cmpe"
+        },
+        "applicationGroupName": {
+            "value": "avd-pool-dev-cmpe-DAG"
+        },
+        "hostPoolName": {
+            "value": "avd-pool-dev-cmpe"
+        },
+        "hostPoolDescription": {
+            "value": "CMPE AVD Host Pool"
+        },
+        "hostPoolType": {
+            "value": "Personal"
+        },
+        "personalDesktopAssignmentType": {
+            "value": "Direct"
+        },
+        "loadBalancerType": {
+            "value": "Persistent"
+        },
+        "validationEnvironment": {
+            "value": false
+        },
+        "preferredAppGroupType": {
+            "value": "Desktop"
+        },
+        "vmTemplate": {
+            "value": ""
+        },
+        "location": {
+            "value": "eastus"
+        }
+    }
+}
