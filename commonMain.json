@@ -93,6 +93,48 @@
                 "description": "VM Template for host pool VMs"
             }
         },
+        "ghRunner01": {
+            "type": "string",
+            "metadata": {
+                "description": "GH Runner 01 Name"
+            }
+        },
+        "ghRunner02": {
+            "type": "string",
+            "metadata": {
+                "description": "GH Runner 02 Name"
+            }
+        },
+        "adminPassword": {
+            "type": "string",
+            "metadata": {
+                "description": "Admin password for GH Runner VMs"
+            }
+        },
+        "storageAccountGitRunners": {
+            "type": "string",
+            "metadata": {
+                "description": "Storage account for GH runner boot diagnostics"
+            }
+        },
+        "subscriptionId": {
+            "type": "string",
+            "metadata": {
+                "description": "Common subscription ID"
+            }
+        },
+        "commonVnetResourceGroupName": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource group that GH Runners will be deployed to"
+            }
+        },
+        "commonVnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Common VNET that GH Runners will be deployed to"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -167,6 +209,48 @@
                     },
                     "vmTemplate": {
                         "value": "[parameters('vmTemplate')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2020-06-01",
+            "name": "ghRunnersDeployment",
+            "resourceGroup": "[parameters('ghRunnersResourceGroup')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', parameters('ghRunnersResourceGroup'))]"
+            ],            
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/ghRunners.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "ghRunner01": {
+                        "value": "[parameters('ghRunner01')]"
+                    },
+                    "ghRunner02": {
+                        "value": "[parameters('ghRunner02')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "storageAccountGitRunners": {
+                        "value": "[parameters('storageAccountGitRunners')]"
+                    },
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    },
+                    "resourceGroupName": {
+                        "value": "[parameters('commonVnetResourceGroupName')]"
+                    },
+                    "commonVnetName": {
+                        "value": "[parameters('commonVnetName')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"

@@ -41,6 +41,27 @@
         "vmTemplate": {
             "value": ""
         },
+        "ghRunner01": {
+            "value": "vmdevghrazgov1"
+        },
+        "ghRunner02": {
+            "value": "vmdevghrazgov2"
+        },
+        "adminPassword": {
+            "value": "pw@01427ha1ry"
+        },
+        "storageAccountGitRunners": {
+            "value": "diagvmdevgitrunners"
+        },
+        "subscriptionId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "commonVnetResourceGroupName": {
+            "value": "sig-test-vm-rg"
+        },
+        "commonVnetName": {
+            "value": "vnet-sig-test-01"
+        },
         "location": {
             "value": "eastus"
         }
