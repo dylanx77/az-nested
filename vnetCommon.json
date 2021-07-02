@@ -23,11 +23,22 @@
         "ghRunnersSnCidr": {
             "type": "String"
         },
+        "nwSubscriptionId": {
+            "type": "string"
+        },
+        "vwanRgName": {
+            "type": "string"
+        },
+        "vwanName": {
+            "type": "string"
+        },
         "location": {
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "vwanId": "[concat('subscriptions/', parameters('nwSubscriptionId'), '/resourceGroups/', parameters('vwanRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('vwanName'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
@@ -92,6 +103,26 @@
                             "delegations": [],
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [
+                    {
+                        "name": "common-vnet-peering-to-hub",
+                        "properties": {
+                            "peeringState": "Connected",
+                            "remoteVirtualNetwork": {
+                                "id": "[variables('vwanId')]"
+                            },
+                            "allowVirtualNetworkAccess": true,
+                            "allowForwardedTraffic": false,
+                            "allowGatewayTransit": false,
+                            "useRemoteGateways": true,
+                            "remoteAddressSpace": {
+                                "addressPrefixes": [
+                                    "10.216.0.0/24"
+                                ]
+                            }
                         }
                     }
                 ],
