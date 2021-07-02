@@ -1,0 +1,109 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vwanName": {
+            "type": "string",
+            "metadata": {
+                "description": "VNet name"
+            }
+        },
+        "vwanSku": {
+            "type": "string",
+            "metadata": {
+                "description": "Address prefix"
+            }
+        },
+        "hubName": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet 1 Prefix"
+            }
+        },
+        "hubAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet 1 Name"
+            }
+        },
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "commonSubscriptionId": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "commonVnetRgName": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "commonVnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {
+        "commonVnetId": "[concat('subscriptions/', parameters('commonSubscriptionId'), '/resourceGroups/', parameters('commonVnetRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('commonVnetName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualWans",
+            "name": "[parameters('vwanName')]",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "type": "[parameters('vwanSku')]",
+                "disableVpnEncryption": false,
+                "allowBranchToBranchTraffic": true,
+                "office365LocalBreakoutCategory": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualHubs",
+            "name": "[parameters('hubName')]",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualWans/', parameters('vwanName'))]"
+            ],
+            "properties": {
+                "addressPrefix": "[parameters('hubAddressPrefix')]",
+                "virtualWan": {
+                    "id": "[resourceId('Microsoft.Network/virtualWans',parameters('vwanName'))]"
+                },
+                "virtualNetworkPeerings": [
+                    {
+                        "name": "hub-to-common-vnet-peering",
+                        "properties": {
+                            "peeringState": "Connected",
+                            "remoteVirtualNetwork": {
+                                "id": "[variables('commonVnetId')]"
+                            },
+                            "allowVirtualNetworkAccess": true,
+                            "allowForwardedTraffic": false,
+                            "allowGatewayTransit": false,
+                            "useRemoteGateways": true,
+                            "remoteAddressSpace": {
+                                "addressPrefixes": [
+                                    "10.216.5.0/24"
+                                ]
+                            }
+                        }
+                    }
+                ],
+            }
+        }
+    ],
+    "outputs": {
+      
+    }
+  }
