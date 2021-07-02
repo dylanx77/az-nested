@@ -86,7 +86,7 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
-            "name": "[variables('ghRunner01-nic')]",
+            "name": "[variables('ghRunner02-nic')]",
             "location": "[parameters('location')]",
             "properties": {
                 "ipConfigurations": [
