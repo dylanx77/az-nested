@@ -79,27 +79,23 @@
                 "addressPrefix": "[parameters('hubAddressPrefix')]",
                 "virtualWan": {
                     "id": "[resourceId('Microsoft.Network/virtualWans',parameters('vwanName'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections",
+            "apiVersion": "2020-05-01",
+            "name": "[format('{0}/{1}_connection', parameters('vwanName'), parameters('commonVnetName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualHubs', parameters('hubName'))]"
+            ],
+            "properties": {
+                "remoteVirtualNetwork": {
+                    "id": "[variables('commonVnetId')]"
                 },
-                "virtualNetworkPeerings": [
-                    {
-                        "name": "hub-to-common-vnet-peering",
-                        "properties": {
-                            "peeringState": "Connected",
-                            "remoteVirtualNetwork": {
-                                "id": "[variables('commonVnetId')]"
-                            },
-                            "allowVirtualNetworkAccess": true,
-                            "allowForwardedTraffic": false,
-                            "allowGatewayTransit": false,
-                            "useRemoteGateways": true,
-                            "remoteAddressSpace": {
-                                "addressPrefixes": [
-                                    "10.216.5.0/24"
-                                ]
-                            }
-                        }
-                    }
-                ],
+                "allowHubToRemoteVnetTransit": true,
+                "allowRemoteVnetToUseHubVnetGateways": true,
+                "enableInternetSecurity": true
             }
         }
     ],
