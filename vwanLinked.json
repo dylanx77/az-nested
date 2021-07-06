@@ -26,6 +26,24 @@
                 "description": "Subnet 1 Name"
             }
         },
+        "commonSubscriptionId": {
+            "type": "string",
+            "metadata": {
+                "description": "Common subscription ID"
+            }
+        },
+        "commonVnetRgName": {
+            "type": "string",
+            "metadata": {
+                "description": "Common VNET resource group name"
+            }
+        },
+        "commonVnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Common VNET name"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -33,7 +51,9 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "commonVnetId": "[concat('subscriptions/', parameters('commonSubscriptionId'), '/resourceGroups/', parameters('commonVnetRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('commonVnetName'))]"
+    },
     "resources": [
         {
             "type": "Microsoft.Network/virtualWans",
@@ -60,6 +80,22 @@
                 "virtualWan": {
                     "id": "[resourceId('Microsoft.Network/virtualWans',parameters('vwanName'))]"
                 }
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections",
+            "apiVersion": "2020-05-01",
+            "name": "[format('{0}/{1}_connection', parameters('hubName'), parameters('commonVnetName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualHubs', parameters('hubName'))]"
+            ],
+            "properties": {
+                "remoteVirtualNetwork": {
+                    "id": "[variables('commonVnetId')]"
+                },
+                "allowHubToRemoteVnetTransit": true,
+                "allowRemoteVnetToUseHubVnetGateways": true,
+                "enableInternetSecurity": true
             }
         }
     ],
