@@ -106,26 +106,6 @@
                         }
                     }
                 ],
-                "virtualNetworkPeerings": [
-                    {
-                        "name": "common-vnet-peering-to-hub",
-                        "properties": {
-                            "peeringState": "Connected",
-                            "remoteVirtualNetwork": {
-                                "id": "[variables('vwanId')]"
-                            },
-                            "allowVirtualNetworkAccess": true,
-                            "allowForwardedTraffic": false,
-                            "allowGatewayTransit": false,
-                            "useRemoteGateways": true,
-                            "remoteAddressSpace": {
-                                "addressPrefixes": [
-                                    "10.216.0.0/24"
-                                ]
-                            }
-                        }
-                    }
-                ],
                 "enableDdosProtection": false
             }
         }
