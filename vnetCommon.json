@@ -128,6 +128,29 @@
                 ],
                 "enableDdosProtection": false
             }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2020-11-01",
+            "name": "[concat(parameters('vnetName'), '/RemoteVnetToHubPeering')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+            ],
+            "properties": {
+                "peeringState": "Connected",
+                "remoteVirtualNetwork": {
+                    "id": "[variables('vwanId')]"
+                },
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": false,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": true,
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "10.216.0.0/24"
+                    ]
+                }
+            }
         }
     ]
 }
