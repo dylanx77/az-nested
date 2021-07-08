@@ -33,9 +33,7 @@
             }
         }
     },
-    "variables": {
-        "commonVnetId": "[concat('subscriptions/', parameters('commonSubscriptionId'), '/resourceGroups/', parameters('commonVnetRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('commonVnetName'))]"
-    },
+    "variables": {},
     "resources": [
         {
             "type": "Microsoft.Network/virtualWans",
