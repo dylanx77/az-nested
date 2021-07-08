@@ -25,25 +25,7 @@
             "metadata": {
                 "description": "Subnet 1 Name"
             }
-        },
-        "commonSubscriptionId": {
-            "type": "string",
-            "metadata": {
-                "description": "Common subscription ID"
-            }
-        },
-        "commonVnetRgName": {
-            "type": "string",
-            "metadata": {
-                "description": "Common VNET resource group name"
-            }
-        },
-        "commonVnetName": {
-            "type": "string",
-            "metadata": {
-                "description": "Common VNET name"
-            }
-        },
+        },       
         "location": {
             "type": "string",
             "metadata": {
