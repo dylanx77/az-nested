@@ -30,7 +30,9 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "ghSubnetName": "[concat('subnet-', replace(parameters('githubSnCidr'),'/', '_'), '-dev-github')]"
+    },    
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
@@ -143,7 +145,7 @@
                         }
                     },
                     {
-                        "name": "subnet-dev-github",
+                        "name": "[variables('ghSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('githubSnCidr')]",
                             "networkSecurityGroup": {

@@ -2,67 +2,43 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vwanName": {
-            "type": "string",
-            "metadata": {
-                "description": "VNet name"
-            }
-        },
-        "vwanSku": {
-            "type": "string",
-            "metadata": {
-                "description": "Address prefix"
-            }
-        },
         "hubName": {
             "type": "string",
             "metadata": {
-                "description": "Subnet 1 Prefix"
+                "description": "Virtual hub name that will be peered to"
             }
         },
-        "hubAddressPrefix": {
+        "subscriptionId": {
             "type": "string",
             "metadata": {
-                "description": "Subnet 1 Name"
+                "description": "ID for subscription that VNET to be peered exists in."
             }
         },
-        "location": {
+        "vnetRgName": {
             "type": "string",
             "metadata": {
-                "description": "Location for all resources."
+                "description": "Resource Group name where virtual network to be peered exists."
             }
         },
-        "commonSubscriptionId": {
+        "vnetName": {
             "type": "string",
             "metadata": {
-                "description": "Location for all resources."
-            }
-        },
-        "commonVnetRgName": {
-            "type": "string",
-            "metadata": {
-                "description": "Location for all resources."
-            }
-        },
-        "commonVnetName": {
-            "type": "string",
-            "metadata": {
-                "description": "Location for all resources."
+                "description": "Name of the virtual network to be peered."
             }
         }
     },
     "variables": {
-        "commonVnetId": "[concat('subscriptions/', parameters('commonSubscriptionId'), '/resourceGroups/', parameters('commonVnetRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('commonVnetName'))]"
+        "vnetId": "[concat('subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('vnetRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections",
             "apiVersion": "2020-05-01",
-            "name": "[concat(parameters('hubName'), '/', parameters('commonVnetName'))]",
+            "name": "[concat(parameters('hubName'), '/', parameters('vnetName'))]",
             "dependsOn": [],
             "properties": {
                 "remoteVirtualNetwork": {
-                    "id": "[variables('commonVnetId')]"
+                    "id": "[variables('vnetId')]"
                 },
                 "allowHubToRemoteVnetTransit": true,
                 "allowRemoteVnetToUseHubVnetGateways": true,

@@ -23,39 +23,11 @@
         "ghRunnersSnCidr": {
             "type": "String"
         },
-        "nwSubscriptionId": {
-            "type": "string"
-        },
-        "vwanRgName": {
-            "type": "string"
-        },
-        "vwanName": {
-            "type": "string"
-        },
         "location": {
             "type": "String"
-        },
-        "vwanSku": {
-            "type": "string"
-        },
-        "hubName": {
-            "type": "string"
-        },
-        "hubAddressPrefix": {
-            "type": "string"
-        },
-        "commonSubscriptionId": {
-            "type": "string"
-        },
-        "commonVnetRgName": {
-            "type": "string"
-        },
-        "commonVnetName": {
-            "type": "string"
         }
     },
     "variables": {
-        "vwanId": "[concat('subscriptions/', parameters('nwSubscriptionId'), '/resourceGroups/', parameters('vwanRgName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('vwanName'))]"
     },
     "resources": [
         {
@@ -126,48 +98,6 @@
                 ],
                 "enableDdosProtection": false
             }
-        },
-        {
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
-        "name": "peerToVwan",
-        "resourceGroup": "[parameters('vwanRgName')]",
-        "dependsOn": [
-          "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanPeer.json",
-            "contentVersion":"1.0.0.0"
-          },
-          "parameters": {
-            "vwanName": {
-              "value": "[parameters('vwanName')]"
-            },
-            "vwanSku": {
-              "value": "[parameters('vwanSku')]"
-            },
-            "hubName": {
-              "value": "[parameters('hubName')]"
-            },
-            "hubAddressPrefix": {
-              "value": "[parameters('hubAddressPrefix')]"
-            },
-            "commonSubscriptionId": {
-              "value": "[parameters('commonSubscriptionId')]"
-            },
-            "commonVnetRgName": {
-              "value": "[parameters('commonVnetRgName')]"
-            },
-            "commonVnetName": {
-              "value": "[parameters('commonVnetName')]"
-            },
-            "location": {
-              "value": "[parameters('location')]"
-            }
-          }
         }
-      }
     ]
 }

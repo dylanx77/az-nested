@@ -36,7 +36,8 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+    },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
