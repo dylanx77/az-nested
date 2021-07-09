@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vwanResourceGroup": {
+            "value": "rg-network-dev-usgovva"
+        },
+        "hubName": {
+            "value": "hub-dev-network-usgovva"
+        },
+        "commonSubId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "managementSubId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "securitySubId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "identitySubId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "devopsSubId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "commonVnetResourceGroup": {
+            "value": "rg-network-dev-common-usgovva"
+        },
+        "managementVnetResourceGroup": {
+            "value": "rg-network-dev-management-usgovva"
+        },
+        "securityVnetResourceGroup": {
+            "value": "rg-network-dev-security-usgovva"
+        },
+        "identityVnetResourceGroup": {
+            "value": "rg-network-dev-identity-usgovva"
+        },
+        "devopsVnetResourceGroup": {
+            "value": "rg-network-dev-devops-usgovva"
+        },
+        "commonVnetName": {
+            "value": "vnet-10.216.5.0_24-dev-common-usgovva"
+        },
+        "devopsVnetName": {
+            "value": "vnet-10.216.4.0_24-dev-devops-usgovva"
+        },
+        "identityVnetName": {
+            "value": "vnet-10.216.2.0_24-dev-identity-usgovva"
+        },
+        "managementVnetName": {
+            "value": "vnet-10.216.6.0_24-dev-management-usgovva"
+        },
+        "securityVnetName": {
+            "value": "vnet-10.216.3.0_24-dev-security-usgovva"
+        }
+    }
+}

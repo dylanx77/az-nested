@@ -1,0 +1,267 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vwanResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the VWAN resource group."
+        }
+      },
+      "hubName": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Virtual Hub. A virtual hub is created inside a virtual wan."
+        }
+      },
+      "commonSubId": {
+        "type": "string",
+        "metadata": {
+            "description": "Subscription ID of the common subscription"
+        }
+      },
+      "managementSubId": {
+        "type": "string",
+        "metadata": {
+            "description": "Subscription ID of the management subscription"
+        }
+      },
+      "securitySubId": {
+        "type": "string",
+        "metadata": {
+            "description": "Subscription ID of the security subscription"
+        }
+      },
+      "identitySubId": {
+        "type": "string",
+        "metadata": {
+            "description": "Subscription ID of the identity subscription"
+        }
+      },
+      "devopsSubId": {
+        "type": "string",
+        "metadata": {
+            "description": "Subscription ID of the devops subscription"
+        }
+      },
+      "commonVnetResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Common vnet resource group."
+        }
+      },
+      "managementVnetResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Management vnet resource group."
+        }
+      },
+      "securityVnetResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Security vnet resource group."
+        }
+      },
+      "identityVnetResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Identity vnet resource group."
+        }
+      },
+      "devopsVnetResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Devops vnet resource group."
+        }
+      },
+      "commonVnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Common VNet name"
+        }
+      },
+      "devopsVnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Devops VNet name"
+        }
+      },
+      "identityVnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Identity VNet name"
+        }
+      },
+      "managementVnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Management VNet name"
+        }
+      },
+      "securityVnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Security VNet name"
+        }
+      }
+    },
+    "variables": {
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "peerIdentityToVwan",
+        "resourceGroup": "[parameters('vwanResourceGroup')]",
+        "dependsOn": [
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanPeer.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "hubName": {
+              "value": "[parameters('hubName')]"
+            },
+            "subscriptionId": {
+              "value": "[parameters('identitySubId')]"
+            },
+            "vnetRgName": {
+              "value": "[parameters('identityVnetResourceGroup')]"
+            },
+            "vnetName": {
+              "value": "[parameters('identityVnetName')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "peerCommonToVwan",
+        "resourceGroup": "[parameters('vwanResourceGroup')]",
+        "dependsOn": [
+          "peerIdentityToVwan"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanPeer.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "hubName": {
+              "value": "[parameters('hubName')]"
+            },
+            "subscriptionId": {
+              "value": "[parameters('commonSubId')]"
+            },
+            "vnetRgName": {
+              "value": "[parameters('commonVnetResourceGroup')]"
+            },
+            "vnetName": {
+              "value": "[parameters('commonVnetName')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "peerDevopsToVwan",
+        "resourceGroup": "[parameters('vwanResourceGroup')]",
+        "dependsOn": [
+          "peerIdentityToVwan",
+          "peerCommonToVwan"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanPeer.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "hubName": {
+              "value": "[parameters('hubName')]"
+            },
+            "subscriptionId": {
+              "value": "[parameters('devopsSubId')]"
+            },
+            "vnetRgName": {
+              "value": "[parameters('devopsVnetResourceGroup')]"
+            },
+            "vnetName": {
+              "value": "[parameters('devopsVnetName')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "peerManagementToVwan",
+        "resourceGroup": "[parameters('vwanResourceGroup')]",
+        "dependsOn": [
+          "peerIdentityToVwan",
+          "peerCommonToVwan",
+          "peerDevopsToVwan"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanPeer.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "hubName": {
+              "value": "[parameters('hubName')]"
+            },
+            "subscriptionId": {
+              "value": "[parameters('managementSubId')]"
+            },
+            "vnetRgName": {
+              "value": "[parameters('managementVnetResourceGroup')]"
+            },
+            "vnetName": {
+              "value": "[parameters('managementVnetName')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "peerSecurityToVwan",
+        "resourceGroup": "[parameters('vwanResourceGroup')]",
+        "dependsOn": [
+          "peerIdentityToVwan",
+          "peerCommonToVwan",
+          "peerDevopsToVwan",
+          "peerManagementToVwan"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vwanPeer.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "hubName": {
+              "value": "[parameters('hubName')]"
+            },
+            "subscriptionId": {
+              "value": "[parameters('securitySubId')]"
+            },
+            "vnetRgName": {
+              "value": "[parameters('securityVnetResourceGroup')]"
+            },
+            "vnetName": {
+              "value": "[parameters('securityVnetName')]"
+            }
+          }
+        }
+      }
+    ]
+  }
