@@ -28,6 +28,9 @@
         }
     },
     "variables": {
+        "cmpeSubnetName": "[concat('subnet-', replace(parameters('cmpeSnCidr'),'/', '_'), '-avd-cmpe')]",
+        "snowMidsSubnetName": "[concat('subnet-', replace(parameters('snowMidsSnCidr'),'/', '_'), '-dev-snow-mids')]",
+        "ghRunnersSubnetName": "[concat('subnet-', replace(parameters('ghRunnersSnCidr'),'/', '_'), '-dev-github-runners')]"
     },
     "resources": [
         {
@@ -58,7 +61,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "subnet-cmpe",
+                        "name": "[variables('cmpeSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('cmpeSnCidr')]",
                             "networkSecurityGroup": {
@@ -70,7 +73,7 @@
                         }
                     },
                     {
-                        "name": "subnet-dev-snow-mids",
+                        "name": "[variables('snowMidsSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('snowMidsSnCidr')]",
                             "networkSecurityGroup": {
@@ -83,7 +86,7 @@
                         }
                     },
                     {
-                        "name": "subnet-dev-github-runners",
+                        "name": "[variables('ghRunnersSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('ghRunnersSnCidr')]",
                             "networkSecurityGroup": {

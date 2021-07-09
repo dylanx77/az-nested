@@ -37,6 +37,9 @@
         }
     },
     "variables": {
+        "adSubnetName": "[concat('subnet-', replace(parameters('adSnCidr'),'/', '_'), '-dev-activedirectory')]",
+        "pamSubnetName": "[concat('subnet-', replace(parameters('pamSnCidr'),'/', '_'), '-dev-pam')]",
+        "sailpointSubnetName": "[concat('subnet-', replace(parameters('sailpointSnCidr'),'/', '_'), '-dev-sailpoint')]"
     },
     "resources": [
         {
@@ -147,7 +150,7 @@
                         }
                     },
                     {
-                        "name": "subnet-10.216.2.32_27-dev-activedirectory",
+                        "name": "[variables('adSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('adSnCidr')]",
                             "networkSecurityGroup": {
@@ -160,7 +163,7 @@
                         }
                     },
                     {
-                        "name": "subnet-10.216.2.96_27-dev-pam",
+                        "name": "[variables('pamSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('pamSnCidr')]",
                             "networkSecurityGroup": {
@@ -173,7 +176,7 @@
                         }
                     },
                     {
-                        "name": "subnet-10.216.2.64_27-dev-sailpoint",
+                        "name": "[variables('sailpointSubnetName')]",
                         "properties": {
                             "addressPrefix": "[parameters('sailpointSnCidr')]",
                             "networkSecurityGroup": {
