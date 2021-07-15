@@ -6,7 +6,7 @@ customers to be complete in an efficient, repeatable manner. Additionally, these
 be managed by ACP4Gov.
 
 ## Table of Contents
-* [General Info](#google.com)
+* [General Info](#general-information)
 * [Artifacts](#artifacts)
 * [Setup](#setup)
 * [Usage](#usage)
