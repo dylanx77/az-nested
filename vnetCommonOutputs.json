@@ -1,0 +1,124 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "networkSecurityGroupName": {
+            "type": "String"
+        },
+        "vnetName": {
+            "type": "String"
+        },
+        "vnetCidr": {
+            "type": "String"
+        },
+        "dnsServers": {
+            "type": "array"
+        },
+        "cmpeSnCidr": {
+            "type": "String"
+        },
+        "snowMidsSnCidr": {
+            "type": "String"
+        },
+        "ghRunnersSnCidr": {
+            "type": "String"
+        },
+        "location": {
+            "type": "String"
+        }
+    },
+    "variables": {
+        "cmpeSubnetName": "[concat('subnet-', replace(parameters('cmpeSnCidr'),'/', '_'), '-avd-cmpe')]",
+        "snowMidsSubnetName": "[concat('subnet-', replace(parameters('snowMidsSnCidr'),'/', '_'), '-dev-snow-mids')]",
+        "ghRunnersSubnetName": "[concat('subnet-', replace(parameters('ghRunnersSnCidr'),'/', '_'), '-dev-github-runners')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('networkSecurityGroupName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": []
+            }
+        },         
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('vnetName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetCidr')]"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": "[parameters('dnsServers')]"
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('cmpeSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('cmpeSnCidr')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                            },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[variables('snowMidsSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('snowMidsSnCidr')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                            },
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[variables('ghRunnersSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('ghRunnersSnCidr')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                            },
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "enableDdosProtection": false
+            }
+        }
+    ],
+    "outputs": {
+        "commonVnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        },
+        "cmpeSubnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('cmpeSubnetName'))]"
+        },
+        "snowSubnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('snowMidsSubnetName'))]"
+        },
+        "ghRunnersSubnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('ghRunnersSubnetName'))]"
+        }
+    }
+}
