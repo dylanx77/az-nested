@@ -3,28 +3,28 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "networkSecurityGroupName": {
-            "type": "String"
+            "type": "string"
         },
         "vnetName": {
-            "type": "String"
+            "type": "string"
         },
         "vnetCidr": {
-            "type": "String"
+            "type": "string"
         },
         "dnsServers": {
             "type": "array"
         },
         "cmpeSnCidr": {
-            "type": "String"
+            "type": "string"
         },
         "snowMidsSnCidr": {
-            "type": "String"
+            "type": "string"
         },
         "ghRunnersSnCidr": {
-            "type": "String"
+            "type": "string"
         },
         "location": {
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {
@@ -102,5 +102,23 @@
                 "enableDdosProtection": false
             }
         }
-    ]
+    ],
+    "outputs": {
+        "commonVnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        },
+        "cmpeSubnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('cmpeSubnetName'))]"
+        },
+        "snowSubnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('snowMidsSubnetName'))]"
+        },
+        "ghRunnersSubnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), variables('ghRunnersSubnetName'))]"
+        }
+    }
 }

@@ -3,28 +3,28 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "networkSecurityGroupName": {
-            "type": "String"
+            "type": "string"
         },
         "vnetName": {
-            "type": "String"
+            "type": "string"
         },
         "vnetCidr": {
-            "type": "String"
+            "type": "string"
         },
         "dnsServers": {
             "type": "array"
         },
         "bastionSnCidr": {
-            "type": "String"
+            "type": "string"
         },
         "publicIpAddressForBastion": {
-            "type": "String"
+            "type": "string"
         },
         "bastionName": {
-            "type": "String"
+            "type": "string"
         },
         "location": {
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {
@@ -41,7 +41,7 @@
                         "name": "InboundFromAny",
                         "properties": {
                             "description": "Allow connection from any host on https.",
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "sourcePortRange": "*",
                             "destinationPortRange": "443",
                             "sourceAddressPrefix": "*",
@@ -55,7 +55,7 @@
                         "name": "InboundFromGM",
                         "properties": {
                             "description": "This enables the control plane, that is, Gateway Manager to be able to talk to Azure Bastion.",
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "sourcePortRange": "*",
                             "destinationPortRange": "443",
                             "sourceAddressPrefix": "GatewayManager",
@@ -69,7 +69,7 @@
                         "name": "OutboundToVNET_SSH",
                         "properties": {
                             "description": "Egress Traffic to target VMs: Azure Bastion will reach the target VMs over private IP and SSH port",
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "sourcePortRange": "*",
                             "destinationPortRange": "22",
                             "sourceAddressPrefix": "*",
@@ -83,7 +83,7 @@
                         "name": "OutboundToVNET_RDP",
                         "properties": {
                             "description": "Egress Traffic to target VMs: Azure Bastion will reach the target VMs over private IP and RDP port",
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "sourcePortRange": "*",
                             "destinationPortRange": "3389",
                             "sourceAddressPrefix": "*",
@@ -97,7 +97,7 @@
                         "name": "OutboundHTTPStoAzureCloud",
                         "properties": {
                             "description": "Egress Traffic to other public endpoints in Azure",
-                            "protocol": "TCP",
+                            "protocol": "Tcp",
                             "sourcePortRange": "*",
                             "destinationPortRange": "443",
                             "sourceAddressPrefix": "*",
@@ -145,7 +145,7 @@
             }
         },
         {
-            "type": "Microsoft.Network/publicIpAddresses",
+            "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-08-01",
             "name": "[parameters('publicIpAddressForBastion')]",
             "location": "[parameters('location')]",
@@ -183,6 +183,9 @@
         }
     ],
     "outputs": {
-      
+        "managementVnetId": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        }
     }
   }
