@@ -9,7 +9,7 @@ jobs:
         with:
           inlineScript: |
             Install-Module -Name Az -AllowClobber
-            Install-Module -Name AzureRM.Resources
+            Install-Module -Name AzureRM.ManagementGroups -AllowPrerelease 
           azPSVersion: '3.1.0'
       - name: Check out repository code
         uses: actions/checkout@v2
