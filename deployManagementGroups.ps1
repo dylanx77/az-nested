@@ -16,14 +16,14 @@ Install-Module -Name Az.Resources
 New-AzManagementGroup -GroupId $environmentMG
 
 ##Set previously created MG as parent MG for other management groups
-$parentGroup = Get-AzManagementGroup -GroupName $environmentMG
+# $parentGroup = Get-AzManagementGroup -GroupName $environmentMG
 
-##Create management groups for other subscriptions under the environment level MG
-New-AzManagementGroup -GroupName $commonMG -ParentId $parentGroup.id
-New-AzManagementGroup -GroupName $identityMG -ParentId $parentGroup.id
-New-AzManagementGroup -GroupName $managementMG -ParentId $parentGroup.id
-New-AzManagementGroup -GroupName $securityMG -ParentId $parentGroup.id
-New-AzManagementGroup -GroupName $networkMG -ParentId $parentGroup.id
+# ##Create management groups for other subscriptions under the environment level MG
+# New-AzManagementGroup -GroupName $commonMG -ParentId $parentGroup.id
+# New-AzManagementGroup -GroupName $identityMG -ParentId $parentGroup.id
+# New-AzManagementGroup -GroupName $managementMG -ParentId $parentGroup.id
+# New-AzManagementGroup -GroupName $securityMG -ParentId $parentGroup.id
+# New-AzManagementGroup -GroupName $networkMG -ParentId $parentGroup.id
 
 ##Create devops MG directly under root MG
 New-AzManagementGroup -GroupName $devopsMG
