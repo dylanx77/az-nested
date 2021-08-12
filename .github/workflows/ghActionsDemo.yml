@@ -4,7 +4,12 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-
+      - name: Install Az PowerShell Module
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Install-Module -Name Az -AllowClobber
+          azPSVersion: '3.1.0'
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Run Azure PowerShell login script
