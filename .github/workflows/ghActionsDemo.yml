@@ -8,7 +8,7 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            if (Get-Module -ListAvailable -Name az) {
+            if (Get-Module -ListAvailable -Name Az.Resources) {
               Write-Host "Module exists"
             }
             else {
