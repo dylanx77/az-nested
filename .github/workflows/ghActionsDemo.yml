@@ -8,10 +8,10 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            Install-Module -Name AzureRM.ManagementGroups -AllowPrerelease 
-            if (Get-Module -ListAvailable -Name AzureRM.ManagementGroups) {
+            
+            if (Get-Module -ListAvailable -Name AzureRM) {
               Write-Host "Module exists"
-            } 
+            }
             else {
               Write-Host "Module does not exist"
             }
@@ -39,6 +39,7 @@ jobs:
         shell: pwsh
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
+#Install-Module -Name AzureRM.ManagementGroups -AllowPrerelease 
 
       # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       # - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
