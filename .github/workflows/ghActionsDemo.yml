@@ -18,6 +18,16 @@ jobs:
         uses: azure/login@v1
         with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
+      - name: Run Azure PowerShell login script
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $azureAplicationId ="e41b601f-22b1-45f9-a9b6-26cdc7d35b48"
+            $azureTenantId= "8de3d3fb-4ae1-4c39-99e0-bede3ca0a96c"
+            $azurePassword = ConvertTo-SecureString "yxXt.eNGyzXE6cu29NvGQ~3e2E8.P69stJ" -AsPlainText -Force
+            $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
+            Connect-AzAccount -Credential $psCred -TenantId $azureTenantId  -ServicePrincipal
+          azPSVersion: '3.1.0'
       - name: Run Azure PowerShell script
         uses: azure/powershell@v1
         with:
@@ -25,5 +35,3 @@ jobs:
             Get-AzResourceGroup -Name "rg-kv-useast-01"
           azPSVersion: '3.1.0'
       - run: echo "🍏 This job's status is ${{ job.status }}."
-
-      
