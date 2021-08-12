@@ -8,6 +8,9 @@ $securityMG = "mg-c3testsecurity"
 $networkMG = "mg-c3testnetwork"
 $devopsMG = "mg-c3testdevops"
 
+##Install Az Resources modules for working with management groups
+Install-Module -Name Az.Resources
+
 ##Create environment level management group under root MG
 New-AzManagementGroup -GroupId $envrionmentMG
 
