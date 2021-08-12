@@ -14,7 +14,7 @@ jobs:
             else {
               Write-Host "Module does not exist"
             }
-          azPSVersion: '3.1.0'
+          azPSVersion: '4.3.0'
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Run Azure PowerShell login script
@@ -26,16 +26,16 @@ jobs:
             $azurePassword = ConvertTo-SecureString "yxXt.eNGyzXE6cu29NvGQ~3e2E8.P69stJ" -AsPlainText -Force
             $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
             Connect-AzAccount -Credential $psCred -TenantId $azureTenantId  -ServicePrincipal
-          azPSVersion: '3.1.0'
+          azPSVersion: '4.3.0'
       - name: Run Azure PowerShell script
         uses: azure/powershell@v1
         with:
           inlineScript: |
             Get-AzResourceGroup -Name "rg-kv-useast-01"
-          azPSVersion: '3.1.0'
+          azPSVersion: '4.3.0'
       - name: Run Management Group Deployment PS script
         run: .\deployManagementGroups.ps1
-        shell: pwsh
+        shell: powershell
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
 #Install-Module -Name AzureRM.ManagementGroups -AllowPrerelease 
