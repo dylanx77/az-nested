@@ -35,7 +35,7 @@ jobs:
           azPSVersion: '4.3.0'
       - name: Run Management Group Deployment PS script
         run: .\deployManagementGroups.ps1
-        shell: powershell
+        shell: pwsh
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
 #Install-Module -Name AzureRM.ManagementGroups -AllowPrerelease 
