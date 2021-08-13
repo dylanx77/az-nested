@@ -27,17 +27,12 @@ jobs:
             $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
             Connect-AzAccount -Credential $psCred -TenantId $azureTenantId  -ServicePrincipal
           azPSVersion: '4.3.0'
-      - name: Run Azure PowerShell script
+      - name: Create test mg
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            Get-AzResourceGroup -Name "rg-kv-useast-01"
-          azPSVersion: '4.3.0'
-      - name: Run Management Group Deployment PS script
-        run: .\deployManagementGroups.ps1 -wait
-        shell: pwsh
-      - run: echo "🍏 This job's status is ${{ job.status }}."
- 
+            New-AzManagementGroup -GroupId "TestMg03"
+          azPSVersion: '4.3.0' 
 
       # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       # - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -51,3 +46,8 @@ jobs:
       #   uses: azure/login@v1
       #   with:
       #     creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
+
+      # - name: Run Management Group Deployment PS script
+      #   run: *-powershell.exe .\deployManagementGroups.ps1 -wait
+      #   shell: pwsh
