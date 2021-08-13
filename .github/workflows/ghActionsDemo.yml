@@ -34,7 +34,7 @@ jobs:
             Get-AzResourceGroup -Name "rg-kv-useast-01"
           azPSVersion: '4.3.0'
       - name: Run Management Group Deployment PS script
-        run: .\deployManagementGroups.ps1
+        run: .\deployManagementGroups.ps1 -wait
         shell: pwsh
       - run: echo "🍏 This job's status is ${{ job.status }}."
  
