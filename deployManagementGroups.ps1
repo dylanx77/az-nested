@@ -1,6 +1,6 @@
 ##Script requires Management Group Contributor 
 
-$environmentMG = "mg-c3test"
+$environmentMG = "mg-c3test1"
 $commonMG = "mg-c3testcommon"
 $identityMG = "mg-c3testidentity"
 $managementMG = "mg-c3testmanagement"
