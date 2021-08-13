@@ -13,8 +13,8 @@ Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Install-Module -Name Az.Resources
 
 ##Create environment level management group under root MG
-New-AzManagementGroup -GroupId $environmentMG
-
+#New-AzManagementGroup -GroupId $environmentMG
+az account management-group create --name $environmentMG
 ##Set previously created MG as parent MG for other management groups
 # $parentGroup = Get-AzManagementGroup -GroupName $environmentMG
 
@@ -26,4 +26,5 @@ New-AzManagementGroup -GroupId $environmentMG
 # New-AzManagementGroup -GroupName $networkMG -ParentId $parentGroup.id
 
 ##Create devops MG directly under root MG
-New-AzManagementGroup -GroupName $devopsMG
+#New-AzManagementGroup -GroupName $devopsMG
+az account management-group create --name $devopsMG
