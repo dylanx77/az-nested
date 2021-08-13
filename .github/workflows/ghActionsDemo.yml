@@ -31,7 +31,7 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            New-AzManagementGroup -GroupId "TestMg03"
+            New-AzManagementGroup -GroupName "TestMg03"
           azPSVersion: '4.3.0' 
 
       # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
