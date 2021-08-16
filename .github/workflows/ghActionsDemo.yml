@@ -11,5 +11,5 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - run: |
-          az account management-group show
-          az account management-group create --name ghActionsTestMg
+          az account management-group list
+          az account management-group create --name ghActionsTestMg01
