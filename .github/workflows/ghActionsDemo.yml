@@ -11,7 +11,7 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            Get-AzContext
+            Uninstall-AzureRm
           azPSVersion: '4.3.0'
       - name: Run Azure PowerShell login script
         uses: azure/powershell@v1
