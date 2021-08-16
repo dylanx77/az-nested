@@ -12,6 +12,3 @@ jobs:
          creds: ${{ secrets.AZURE_CREDENTIALS }}
      - run: |
          az account management-group create --name ghActionsTestMgCli
-         az account management-group list
-         az account management-group show --name environmentMG
-         az account management-group show --name ghActionsTestMgCli
