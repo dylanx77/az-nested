@@ -1,0 +1,25 @@
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Run Azure PowerShell login script
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $azureApplicationId = "0a90645e-43f7-4228-a3bd-e71961edc59b"
+            $azureTenantId= "8de3d3fb-4ae1-4c39-99e0-bede3ca0a96c"
+            $azurePassword = ConvertTo-SecureString "uDTKOnZiHMcwpcMs45GfEFIr.xYQSMjlSJ" -AsPlainText -Force
+            $psCred = New-Object System.Management.Automation.PSCredential($azureApplicationId , $azurePassword)
+            Connect-AzAccount -Credential $psCred -TenantId $azureTenantId  -ServicePrincipal
+          azPSVersion: '4.3.0'
+      - name: Create test mg
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Get-AzManagementGroup
+          azPSVersion: '4.3.0' 
+
