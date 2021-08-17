@@ -1,0 +1,49 @@
+name: azure_mg_workflow
+
+on:
+  push:
+    paths:
+    - '.github/workflows/azureMg.yml'
+  pull_request:
+    paths:
+    - '.github/workflows/azureMg.yml'
+
+jobs:
+
+   Build:
+      environment: Build
+      runs-on: self-hosted
+      steps:
+      - name: Run Azure PowerShell login script
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $azureAplicationId = "0a90645e-43f7-4228-a3bd-e71961edc59b"
+            $azureTenantId= "8de3d3fb-4ae1-4c39-99e0-bede3ca0a96c"
+            $azurePassword = ConvertTo-SecureString "uDTKOnZiHMcwpcMs45GfEFIr.xYQSMjlSJ" -AsPlainText -Force
+            $psCred = New-Object System.Management.Automation.PSCredential($azureAplicationId , $azurePassword)
+            Connect-AzAccount -Credential $psCred -TenantId $azureTenantId  -ServicePrincipal
+          azPSVersion: '4.3.0'
+
+   Test:
+      needs: [Build]
+      environment: Test
+      runs-on: self-hosted
+      steps:
+      - name: Set to specific Subscription for Deployment
+        run: |
+          az account set --subscription 009bdc79-1eee-40cf-a62d-8dd277d1cd26
+          Set-AzContext -Subscription 009bdc79-1eee-40cf-a62d-8dd277d1cd26
+
+   Deploy:
+      env:
+        NODE_TLS_REJECT_UNAUTHORIZED: 0
+        GIT_SSL_NO_VERIFY: true
+      needs: [Test]
+      environment: Deploy
+      runs-on: self-hosted
+      steps:
+      - uses: actions/checkout@v2    
+      - name: Deploy a Management Group
+        run: |
+          New-AzManagementGroup -GroupName "TestGroup"
