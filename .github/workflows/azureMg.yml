@@ -28,7 +28,7 @@ jobs:
    Test:
       needs: [Build]
       environment: Test
-      runs-on: self-hosted
+      runs-on: windows-latest
       steps:
       - name: Set to specific Subscription for Deployment
         run: |
@@ -41,7 +41,7 @@ jobs:
         GIT_SSL_NO_VERIFY: true
       needs: [Test]
       environment: Deploy
-      runs-on: self-hosted
+      runs-on: windows-latest
       steps:
       - uses: actions/checkout@v2    
       - name: Deploy a Management Group
