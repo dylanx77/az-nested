@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ghRunner01": {
+            "value": "ghRunnerVm01"
+        },
+        "ghRunner02": {
+            "value": "ghRunnerVm02"
+        },
+        "adminPassword": {
+            "value": "ghRunnerVm02"
+        },
+        "storageAccountGitRunners": {
+            "value": "strgghrunner01"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "commonVnetResourceGroup": {
+            "value": "rg-network-dev-common-usgovva"
+        },
+        "commonSubId": {
+            "value": "009bdc79-1eee-40cf-a62d-8dd277d1cd26"
+        },
+        "dnsServers": {
+            "value": [
+                "10.216.2.36",
+                "10.216.2.37"
+            ]
+        },
+        "commonVnetName": {
+            "value": "vnet-10.216.5.0_24-dev-common-usgovva"
+        },
+        "commonVnetAddressPrefix": {
+            "value": "10.216.5.0/24"
+        },
+        "commonCmpeSnCidr": {
+            "value": "10.216.5.0/27"
+        },
+        "commonSnowMidsSnCidr": {
+            "value": "10.216.5.64/27"
+        },
+        "commonGhRunnersSnCidr": {
+            "value": "10.216.5.96/27"
+        },
+        "commonNsgName": {
+            "value": "nsg-dev-common-usgovva"
+        }
+    }
+}

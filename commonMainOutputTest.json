@@ -1,0 +1,196 @@
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "ghRunner01": {
+        "type": "string",
+        "metadata":{
+          "description": ""
+        }
+      },
+      "ghRunner02": {
+        "type": "string",
+        "metadata": {
+            "description": ""
+        }
+      },
+      "adminPassword": {
+        "type": "string",
+        "metadata": {
+            "description": ""
+        }
+      },
+      "storageAccountGitRunners": {
+        "type": "string",
+        "metadata": {
+            "description": ""
+        }
+      },
+      "location": {
+        "type": "string",
+        "metadata":{
+          "description": "Location for resources."
+        }
+      },
+      "commonSubId": {
+        "type": "string",
+        "metadata": {
+            "description": "Subscription ID of the common subscription"
+        }
+      },
+      "commonVnetResourceGroup": {
+        "type": "string",
+        "metadata": {
+            "description": "Name of the Common vnet resource group."
+        }
+      },
+      "dnsServers": {
+        "type": "array",
+        "metadata": {
+          "description": "Dns Servers"
+        }
+      },
+      "commonVnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Common VNet name"
+        }
+      },
+      "commonVnetAddressPrefix": {
+        "type": "string",
+        "metadata": {
+          "description": "Common Address Cidr"
+        }
+      },
+      "commonCmpeSnCidr": {
+        "type": "string",
+        "metadata": {
+          "description": "Common CMPE subnet Cidr"
+        }
+      },
+      "commonSnowMidsSnCidr": {
+        "type": "string",
+        "metadata": {
+          "description": "Common SNOW Mid Servers subnet Cidr"
+        }
+      },
+      "commonGhRunnersSnCidr": {
+        "type": "string",
+        "metadata": {
+          "description": "Common Github Runners subnet Cidr"
+        }
+      },
+      "commonNsgName": {
+        "type": "string",
+        "metadata": {
+          "description": "Common NSG Name"
+        }
+      }
+    },
+    "variables": {
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "commonVnetRgDeployment",
+        "subscriptionId": "[parameters('commonSubId')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/rgLinked.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "rgName": {
+              "value": "[parameters('commonVnetResourceGroup')]"
+            },
+            "location": {
+              "value": "[parameters('location')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "commonVnetDeployment",
+        "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+        "dependsOn": [
+          "commonVnetRgDeployment"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/vnetCommonOutputs.json",
+            "contentVersion":"1.0.0.0"
+          },
+          "parameters": {
+            "networkSecurityGroupName": {
+              "value": "[parameters('commonNsgName')]"
+            },
+            "vnetName": {
+              "value": "[parameters('commonVnetName')]"
+            },
+            "vnetCidr": {
+              "value": "[parameters('commonVnetAddressPrefix')]"
+            },
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "cmpeSnCidr": {
+              "value": "[parameters('commonCmpeSnCidr')]"
+            },
+            "snowMidsSnCidr": {
+              "value": "[parameters('commonSnowMidsSnCidr')]"
+            },
+            "ghRunnersSnCidr": {
+              "value": "[parameters('commonGhRunnersSnCidr')]"
+            },
+            "dnsServers": {
+              "value": "[parameters('dnsServers')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-06-01",
+        "name": "ghRunnersDeployment",
+        "resourceGroup": "[parameters('commonVnetResourceGroup')]",
+        "dependsOn": [
+            "commonVnetDeployment",
+            "commonVnetRgDeployment"
+        ],            
+        "properties": {
+            "mode": "Incremental",
+            "templateLink": {
+                "uri": "https://raw.githubusercontent.com/dylanx77/az-nested/main/ghRunnersVnetOuput.json",
+                "contentVersion":"1.0.0.0"
+            },
+            "parameters": {
+                "ghRunner01": {
+                    "value": "[parameters('ghRunner01')]"
+                },
+                "ghRunner02": {
+                    "value": "[parameters('ghRunner02')]"
+                },
+                "adminPassword": {
+                    "value": "[parameters('adminPassword')]"
+                },
+                "storageAccountGitRunners": {
+                    "value": "[parameters('storageAccountGitRunners')]"
+                },
+                "ghRunnersSubnetId": {
+                    "value": "[reference('commonVnetDeployment').outputs.ghRunnersSubnetId.value]"
+                },
+                "location": {
+                    "value": "[parameters('location')]"
+                }
+            }
+        }
+      }
+    ]
+  }
