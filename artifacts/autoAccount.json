@@ -53,9 +53,9 @@
                     },
                     "resources": [
                         {
-                            "type": "Microsoft.Automation/automationAccounts/runbooks",
+                            "type": "runbooks",
                             "apiVersion": "2020-01-13-preview",
-                            "name":  "[concat(parameters('automationAccountName'), '/', parameters('powerShellRunbookName'))]",
+                            "name":  "[parameters('powerShellRunbookName')]",
                             "location": "[parameters('location')]",
                             "dependsOn": [
                                 "[parameters('automationAccountName')]"
@@ -84,8 +84,8 @@
             "automationAccountName": {
                 "value": "[parameters('automationAccountName')]"
             },
-            "powershellRunbookName": {
-                "value": "[parameters('powershellRunbookName')]"
+            "powerShellRunbookName": {
+                "value": "[parameters('powerShellRunbookName')]"
             },
             "powerShellRunbookDescription": {
                 "value": "[parameters('powerShellRunbookDescription')]"
