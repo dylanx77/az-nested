@@ -55,7 +55,7 @@
                 {
                     "type": "Microsoft.Automation/automationAccounts/runbooks",
                     "apiVersion": "2020-01-13-preview",
-                    "name": "[parameters('powerShellRunbookName')]",
+                    "name": "[concat(parameters('automationAccountName'), '/', parameters('powerShellRunbookName'))]",
                     "location": "[parameters('location')]",
                     "dependsOn": [
                         "[parameters('automationAccountName')]"
