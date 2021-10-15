@@ -50,26 +50,28 @@
                         "sku": {
                             "name": "Basic"
                         }
-                    }
-                },
-                {
-                    "type": "Microsoft.Automation/automationAccounts/runbooks",
-                    "apiVersion": "2020-01-13-preview",
-                    "name": "[concat(parameters('automationAccountName'), '/', parameters('powerShellRunbookName'))]",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[parameters('automationAccountName')]"
-                    ],
-                    "properties": {
-                        "runbookType": "PowerShell",
-                        "logProgress": "false",
-                        "logVerbose": "false",
-                        "description": "[parameters('powerShellRunbookDescription')]",
-                        "publishContentLink": {
-                            "uri": "[uri(parameters('artifactsLocation'), concat('scripts/installPowershell.ps1'))]",
-                            "version": "1.0.0.0"
+                    },
+                    "resources": [
+                        {
+                            "type": "Microsoft.Automation/automationAccounts/runbooks",
+                            "apiVersion": "2020-01-13-preview",
+                            "name":  "[concat(parameters('automationAccountName'), '/', parameters('powerShellRunbookName'))]",
+                            "location": "[parameters('location')]",
+                            "dependsOn": [
+                                "[parameters('automationAccountName')]"
+                            ],
+                            "properties": {
+                                "runbookType": "PowerShell",
+                                "logProgress": "false",
+                                "logVerbose": "false",
+                                "description": "[parameters('powerShellRunbookDescription')]",
+                                "publishContentLink": {
+                                    "uri": "[uri(parameters('artifactsLocation'), concat('scripts/installPowershell.ps1'))]",
+                                    "version": "1.0.0.0"
+                                }
+                            }
                         }
-                    }
+                    ]
                 }
             ],
             "outputs": {
